@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+  <g id="Arrow_Right" data-name="Arrow Right" transform="translate(516 -1154) rotate(90)">
+    <circle id="Ellipse_14" data-name="Ellipse 14" cx="10.5" cy="10.5" r="10.5" transform="translate(1154 495)" fill="#382f2f"/>
+    <path id="arrow-up" d="M10.471,4.862a.667.667,0,1,1-.943.943L6,2.276v9.057a.667.667,0,1,1-1.333,0V2.276L1.138,5.8A.667.667,0,1,1,.2,4.862L4.862.2A.667.667,0,0,1,5.8.2Z" transform="translate(1159.333 499)" fill="#fff"/>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+input[name="caption"] + label{
+    border-radius: 7px;
+    background-color: #FFF;
+    border: 1px solid #e4e5e7;
+    padding: 10px;
+}
+input[name="caption"]:checked + label{
+    background-color:rgb(233, 229, 229);
+}
+

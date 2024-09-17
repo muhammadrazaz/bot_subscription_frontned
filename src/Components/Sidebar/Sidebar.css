@@ -1,0 +1,93 @@
+#sidebar{
+    height: 100%;
+    display: flex;
+    position: fixed;
+    top: 60px;
+    /* width: var(--sidebar-width); */
+    width: 65px;
+    /* background-color: red; */
+    z-index: 20;
+    
+}
+
+
+
+
+.icon-bar{
+    width: 65px;
+    background-color: #232529;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    height:calc(100% - 60px) ;
+    /* background-color: red; */
+    overflow-x: hidden;
+ 
+}
+.icon-bar::-webkit-scrollbar-thumb {
+    background: #888b91;
+}
+
+/* Change the color of the scrollbar track */
+.icon-bar::-webkit-scrollbar-track {
+    background: #626469;
+}
+
+/* Optionally, you can also change the width of the scrollbar */
+.icon-bar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.nav-link{
+    width: 70%;
+    aspect-ratio: 1/1;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px #00000029;
+    border-radius: 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 50px;
+   
+}
+
+.nav-link:hover{
+    background-image: linear-gradient(#FC506E,#DFA14E);
+}
+
+
+#sidebar .icon-bar .active-1{
+    background-image: linear-gradient(#FC506E,#DFA14E) !important;
+    
+}
+
+#sidebar .icon-bar .active {
+    background: linear-gradient(to bottom, #646262, #6f7271);
+}
+
+/* .active img{
+    filter: invert(59%) sepia(99%) saturate(4429%) hue-rotate(322deg) brightness(105%) contrast(98%);
+
+} */
+
+.sidebar-logo{
+    display: none;
+    position: relative;
+    top: -15px;
+}
+
+@media screen and (max-width:576px){
+    #sidebar{
+        top: 0px !important;
+    }
+    .sidebar-logo{
+        display: block;
+    }
+    .icon-bar{
+        height: 100%;
+    }
+}
+

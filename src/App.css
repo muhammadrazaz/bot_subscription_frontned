@@ -1,38 +1,118 @@
-.App {
-  text-align: center;
+:root{
+  --sub-sidebar-width:0px;
+  --sub-sidebar :none;
+  --sub-sidebar-position :static;
+  --left:0px;
+  --sub-sidebar-left:65px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: 'Macan Regular';
+  src: url('./Fonts/MacanPanWeb-Regular.ttf') format('truetype');
+  
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@font-face {
+  font-family: 'Macan Semibold';
+  src: url('./Fonts/MacanPanWeb-Semibold.ttf') format('truetype');
+  
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+@font-face {
+  font-family: 'Macan Bold';
+  src: url('./Fonts/MacanPanWeb-Bold.ttf') format('truetype');
+  
+}
+
+.macan-regular{
+  font-family: 'Macan Regular' !important;
+}
+
+.macan-semibold{
+  font-family: 'Macan Semibold' !important;
+}
+
+.macan-bold{
+  font-family: 'Macan Bold' !important;
+}
+
+
+
+#main{
+  height: calc(100vh - 60px);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.content-div{
+  width: calc(100% - var(--left) - 65px);
+  height: 100%;
+  /* min-height: calc(720px - 60px); */
+  background-color: #F8F9FD;
+  position: relative;
+  left: calc(var(--left) + 65px);
+  top: 60px;
+  /* max-height: fit-content; */
+  /* overflow-y: auto; */
+  min-height: 100vh;
+  height: fit-content;
+
+  /* width: 1000px;
+  height: 1000px; */
+  /* transform-origin: left top; */
+
+
+  
+ 
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.yellow-color{
+  color: #ED795E;
+}
+
+
+.h-1{
+  height: 20px !important;
+}
+
+
+
+.font-1{
+  font-size: 40px;
+}
+
+.font-2{
+  font-size: 16px;
+}
+
+
+
+
+
+.mobile{
+  display: none !important;
+}
+
+
+
+
+
+
+@media screen and (max-width:576px){
+
+  .reverse-col{
+    flex-direction: column-reverse;
+}
+.content-div{
+  overflow-y: auto;
+}
+
+  .desktop{
+    display: none;
   }
-  to {
-    transform: rotate(360deg);
+  .mobile{
+    display: flex  !important;
+    margin: 10px 0;
   }
 }
+
