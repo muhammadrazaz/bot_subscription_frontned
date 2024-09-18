@@ -11,7 +11,7 @@ import userManagementIcon from '../../Assets/user-management-icon.svg'
 import productIcon from '../../Assets/products.svg'
 import logoutIcon from '../../Assets/logout-icon.svg'
 import historyIcon from '../../Assets/production-history-icon.svg'
-
+import paymentIcon from '../../Assets/sale-stats-icon.svg'
 import logoPng from '../../Assets/logowhitepng.png'
 
 
@@ -90,6 +90,15 @@ export default function Sidebar(props) {
                         userDetail && userDetail['role'] == "admin" && <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Users" placement='right'>
                             <NavLink to='/users' className={window.location.href.includes('users') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
                                 <img src={userManagementIcon} alt="" style={{ height: '20px' }} />
+                            </NavLink>
+
+                        </MDBTooltip>
+                    }
+
+{
+                        userDetail && userDetail['role'] == "admin" && <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Payments" placement='right'>
+                            <NavLink to='/payment' className={window.location.href.includes('payment') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={paymentIcon} alt="" style={{ height: '20px' }} />
                             </NavLink>
 
                         </MDBTooltip>

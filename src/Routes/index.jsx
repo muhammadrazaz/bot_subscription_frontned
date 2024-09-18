@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import PDFDashboard from "../Pages/PDFDashboard/PDFDashboard";
 import Instagram from "../Pages/Instagram/Instagram";
 import PostHistory from "../Pages/PostHistory/PostHistory";
+import Payment from "../Pages/Payment/Payment";
 const Routes = () => {
   const { token,userDetail } = useAuth();
 
@@ -151,6 +152,10 @@ const Routes = () => {
         {
           path: "/users/:user_id?",
           element: <ClientDetail/>,
+        },
+        {
+          path: "/payment/",
+          element: <Payment/>,
         },
       ],
     },

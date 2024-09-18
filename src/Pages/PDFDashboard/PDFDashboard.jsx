@@ -89,6 +89,7 @@ export default function PDFDashboard() {
         }).then(response => {
 
             setErrors({})
+            
             const data = response.data.rows
             for (var i = 0; i < data.length; i++) {
                 data[i]['input'] = <a target="_blank" href={axios.defaults.baseURL + '/pdf/download/?filename=' + data[i]['input']}>{data[i]['input']}</a>
