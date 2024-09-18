@@ -61,7 +61,7 @@ export default function CustomPieChart(props) {
                       paddingAngle={5}
                       dataKey="value"
                     >
-                      {props.data.map((entry, index) => (
+                      {props.data &&props.data.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={props.colors[index % props.colors.length]} />
                       ))}
                     </Pie>

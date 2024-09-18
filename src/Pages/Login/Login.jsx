@@ -5,11 +5,11 @@ import Loader from '../../Components/Loader/Loader'
 import axios from 'axios'
 
 export default function Login() {
-    const { setToken, token } = useAuth()
+    const { setToken, token,loader,setLoader } = useAuth()
     const [signInData, setSignInData] = useState({})
     const [signUpData, setSignUpData] = useState({})
     const [errors, setErrors] = useState({})
-    const [loader, setLoader] = useState(false)
+    // const [loader, setLoader] = useState(false)
 
 
 
