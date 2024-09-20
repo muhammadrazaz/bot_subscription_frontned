@@ -205,8 +205,11 @@ const Routes = () => {
   ];
 
 
-
-  
+  // useEffect(()=>{
+    
+  //   console.log(!token,!Object.keys(userDetail).length,!token || !Object.keys(userDetail).length)
+  // },[token,userDetail])
+  console.log(userDetail,'==========================')
   const router = createBrowserRouter([
     // ...routesForPublic,
     ...((!token || !userDetail) ? routesForNotAuthenticatedOnly : []),

@@ -17,12 +17,13 @@ export default function Login() {
 
     const LoginApi = (e) => {
         e.preventDefault()
+       
         setLoader(true)
         axios.post("token/", signInData).then(response => {
             // console.log(response)
             setErrors({})
             setToken(response.data.access)
-            setLoader(false)
+            // setLoader(false)
         }).catch(error => {
             console.log(error)
             if (error.response.status === 400) {

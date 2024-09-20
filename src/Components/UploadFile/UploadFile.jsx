@@ -53,6 +53,7 @@ export default function UploadFile(props) {
                     style={{ display: 'none' }}
                     onChange={props.handleFileChange}
                     multiple={props.multiple}
+                    value={props.fileSelected ? undefined : ''}
                 />
                 <div class="invalid-feedback w-100 text-center">
                     {props.erorrs && props.errors.file}

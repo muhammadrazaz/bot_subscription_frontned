@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BasePage from '../BasePage/BasePage'
 import UploadFile from '../../Components/UploadFile/UploadFile';
 import axios from 'axios';
@@ -34,10 +34,14 @@ export default function PDFDashboard() {
         ]
     })
 
+    useEffect(()=>{
+        console.log(fileSelected,'11111111111111111111111')
+    },[fileSelected])
+
     const handleFileChange = (event) => {
         const selectedFiles = event.target.files;
         const formData = new FormData();
-
+        console.log(selectedFiles,'======================================')
         if (selectedFiles.length > 0) {
             Array.from(selectedFiles).forEach((file) => {
                 if (file.type === "application/pdf") {

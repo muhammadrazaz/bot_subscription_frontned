@@ -5,7 +5,7 @@ export const ProtectedRoute = () => {
     const { token,userDetail } = useAuth();
   
     // Check if the user is authenticated
-    if (!token) {
+    if (!token || !userDetail) {
       // If not authenticated, redirect to the login page
       return <Navigate to="/" />;
     }
