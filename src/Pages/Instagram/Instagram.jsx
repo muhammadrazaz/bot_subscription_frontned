@@ -18,7 +18,7 @@ export default function Instagram() {
     const [isOTP, setIsOTP] = useState(false)
     const [OTP, setOTP] = useState()
     const [isConnection, setIsConnection] = useState(false)
-    const wsUrl = 'ws://127.0.0.1:8001/ws/ac/?token='+token;
+    const wsUrl = 'ws://143.244.180.220:8001/ws/ac/?token='+token;
     const socketRef = useRef(null);
     
     useEffect(() => {
