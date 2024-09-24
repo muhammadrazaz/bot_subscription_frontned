@@ -7,7 +7,7 @@ import './Instagram.css'
 import Loader from '../../Components/Loader/Loader';
 import { useAuth } from '../../Provider/AuthProvider';
 export default function Instagram() {
-    const {token} = useAuth()
+    const { token } = useAuth()
     const [fileSelected, setFileSelected] = useState();
     const [loader, setLoader] = useState(false)
     const [errors, setErrors] = useState({})
@@ -18,55 +18,55 @@ export default function Instagram() {
     const [isOTP, setIsOTP] = useState(false)
     const [OTP, setOTP] = useState()
     const [isConnection, setIsConnection] = useState(false)
-    const wsUrl = 'ws://143.244.180.220:8001/ws/ac/?token='+token;
+    const wsUrl = 'ws://143.244.180.220:8001/ws/ac/?token=' + token;
     const socketRef = useRef(null);
-    
+
     useEffect(() => {
-        
-        
-            socketRef.current = new WebSocket(wsUrl);
-            // Create WebSocket connection
 
-            // Connection opened
-            socketRef.current.onopen = () => {
-                console.log("WebSocket connection established");
-                setIsConnection(true)
-                // Optionally send data to the server
-                socketRef.current.send("Hello Server!");
-            };
 
-            // Listen for messages
-            socketRef.current.onmessage = (event) => {
-                console.log("Message from server: ", event.data);
-                if (event.data === 'otp required') {
-                    setIsOTP(true)
-                }
-                if (event.data === 'otp received') {
-                    setIsOTP(false)
-                    setOTP()
-                }
-            };
+        socketRef.current = new WebSocket(wsUrl);
+        // Create WebSocket connection
 
-            // Handle errors
-            socketRef.current.onerror = (error) => {
-                console.error("WebSocket Error: ", error);
-            };
+        // Connection opened
+        socketRef.current.onopen = () => {
+            console.log("WebSocket connection established");
+            setIsConnection(true)
+            // Optionally send data to the server
+            socketRef.current.send("Hello Server!");
+        };
 
-            // Connection closed
-            socketRef.current.onclose = () => {
-                setIsConnection(false)
-                console.log("WebSocket connection closed");
-            };
+        // Listen for messages
+        socketRef.current.onmessage = (event) => {
+            console.log("Message from server: ", event.data);
+            if (event.data === 'otp required') {
+                setIsOTP(true)
+            }
+            if (event.data === 'otp received') {
+                setIsOTP(false)
+                setOTP()
+            }
+        };
 
-            // Cleanup on component unmount
-            return () => {
-                socketRef.current.close();
-            };
-        
+        // Handle errors
+        socketRef.current.onerror = (error) => {
+            console.error("WebSocket Error: ", error);
+        };
+
+        // Connection closed
+        socketRef.current.onclose = () => {
+            setIsConnection(false)
+            console.log("WebSocket connection closed");
+        };
+
+        // Cleanup on component unmount
+        return () => {
+            socketRef.current.close();
+        };
+
 
     }, [wsUrl]);
     const sendOTP = () => {
-        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN){
+        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
 
             socketRef.current.send(OTP);
         }
@@ -108,9 +108,7 @@ export default function Instagram() {
 
     const uplaodFile = async (e) => {
         e.preventDefault()
-        // return
-        // console.log(file)
-        // return
+        
         setLoader(true)
 
         const formData = new FormData();
@@ -138,7 +136,7 @@ export default function Instagram() {
 
     const postApi = async (e) => {
         e.preventDefault()
-        console.log('============')
+       
         setLoader(true)
 
         const formData = new FormData();
@@ -155,11 +153,11 @@ export default function Instagram() {
             console.log(response)
             setErrors({})
 
-            // setPostData({})
-            // setIsSelect(false)
+            setPostData({})
+            setIsSelect(false)
+            setFileSelected()
+            setCaption()
             setLoader(false)
-            // setFileSelected()
-            // setCaption()
             alert(response.data.message)
         }).catch(error => {
             console.log(error)
@@ -195,12 +193,17 @@ export default function Instagram() {
                             <div className="row">
                                 {generatedCaptions.map((value, index) => {
                                     return (
-                                        <div className="col-4" key={index}>
+                                        <div className="col-4 " key={index}>
                                             <input type="radio" name="caption" id={`caption-${index}`} value={value} className='d-none' onChange={changePostData} />
-                                            <label htmlFor={`caption-${index}`} className='border'>{value}</label>
+                                            <label htmlFor={`caption-${index}`} className='border h-100'>{value}</label>
                                         </div>
                                     );
                                 })}
+                            </div>
+                            <div className="row w-100 my-4">
+                                <div className="col">
+                                    <textarea name='caption' value={postData.caption} onChange={changePostData} className={'w-100 form-control ' + (errors.caption ? 'is-invalid' : '')} rows={5}></textarea>
+                                </div>
                             </div>
 
                             <div className="row">
@@ -247,13 +250,13 @@ export default function Instagram() {
 
             <Modal
                 show={isOTP}
-                onHide={() => { 
+                onHide={() => {
                     // setIsOTP(false)
-                 }}
+                }}
                 size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                style={{zIndex:'10000000000000'}}
+                style={{ zIndex: '10000000000000' }}
 
             >
 
