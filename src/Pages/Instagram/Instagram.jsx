@@ -23,8 +23,9 @@ export default function Instagram() {
 
     useEffect(() => {
 
-
         socketRef.current = new WebSocket(wsUrl);
+        // 
+
         // Create WebSocket connection
 
         // Connection opened
