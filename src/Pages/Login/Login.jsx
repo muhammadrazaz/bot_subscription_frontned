@@ -171,19 +171,12 @@ export default function Login() {
 
                         <div class="input-field">
                             <i class="fas fa-lock"></i>
-                            <input type="text" name="bot_id" value={signUpData['bot_id']} placeholder="Bot ID" onChange={changeSignUpData} className={'bot_id' in errors ? 'form-control is-invalid' : 'form-control'} />
-                            <div></div>
-                            <div class="invalid-feedback">
-                                {errors.bot_id}
-                            </div>
-                        </div>
-
-                        <div class="input-field">
-                            <i class="fas fa-lock"></i>
                             <select name="type" required className={'type' in errors ? 'form-control is-invalid' : 'form-control'} onChange={changeSignUpData}>
                                 <option >Select Type</option>
                                 <option value="subscription">Subscription</option>
                                 <option value="product">Product</option>
+                                <option value="pdf">PDF</option>
+                                <option value="instagram">Instagram</option>
                               
                             </select>
                             <div></div>
@@ -191,6 +184,21 @@ export default function Login() {
                                 {errors.type}
                             </div>
                         </div>
+
+                        {
+                            (signUpData.type ===  "subscription" || signUpData.type === "product") && <div class="input-field">
+                            <i class="fas fa-lock"></i>
+                            <input type="text" name="bot_id" value={signUpData['bot_id']} placeholder="Bot ID" onChange={changeSignUpData} className={'bot_id' in errors ? 'form-control is-invalid' : 'form-control'} />
+                            <div></div>
+                            <div class="invalid-feedback">
+                                {errors.bot_id}
+                            </div>
+                        </div>
+                        }
+
+                        
+
+                        
 
                         <button type="submit" class="custom-btn font-2 macan-regular text-white" >Sign up</button>
 
