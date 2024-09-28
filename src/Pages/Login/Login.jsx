@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './Login.css'
 import { useAuth } from '../../Provider/AuthProvider'
 import Loader from '../../Components/Loader/Loader'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../../Api/axios'
 
 export default function Login() {
     const { setToken, token,loader,setLoader } = useAuth()

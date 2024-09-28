@@ -3,7 +3,8 @@ import BasePage from '../BasePage/BasePage'
 import TableWithPagination from '../../Components/TableWithPagination/TableWithPagination'
 import DownloadButton from '../../Components/DownloadButton/DownloadButton'
 import Loader from '../../Components/Loader/Loader'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../../Api/axios'
 import { useParams } from 'react-router-dom'
 export default function PDFHistory() {
     const {user_id} = useParams()
@@ -21,8 +22,13 @@ export default function PDFHistory() {
 
             },
             {
-                label: 'Output',
+                label: 'Output Without Contacts',
                 field: 'output',
+
+            },
+            {
+                label: 'Output With Contacts',
+                field: 'output_with_contacts',
 
             },
             {
@@ -49,7 +55,7 @@ export default function PDFHistory() {
             for (var i = 0; i < data.length; i++) {
                 data[i]['input'] = <a target="_blank" href={axios.defaults.baseURL+'/pdf/download/?filename='+data[i]['input']}>{data[i]['input']}</a>
                 data[i]['output'] = <a target="_blank" href={axios.defaults.baseURL+'/pdf/download/?filename='+data[i]['output']}>{data[i]['output']}</a>
-                
+                data[i]['output_with_contacts'] = <a target="_blank" href={axios.defaults.baseURL + '/pdf/download/?filename=' + data[i]['output_with_contacts']}>{data[i]['output_with_contacts']}</a>
               }
 
               setTableData(prevState =>({

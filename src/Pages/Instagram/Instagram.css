@@ -8,3 +8,48 @@ input[name="caption"]:checked + label{
     background-color:rgb(233, 229, 229);
 }
 
+.top-btn{
+    font-size: 16px;
+    background-color: transparent;
+    border: 2px solid black;
+}
+
+.active-border{
+    border: 2px solid gray !important; 
+}
+
+.insta-form{
+    border: 2px solid black;
+    width: 450px;
+}
+
+.connect-btn{
+    background-color: black;
+    font-size: 16px;
+    color: white;
+    width: 100%;
+}
+
+.propmt-txt{
+    font-size: 15px;
+    color: '#000000';
+}
+
+.catption-box{
+    border: 2px solid black;
+}
+
+.caption-textarea,.caption-textarea:focus{
+    border-style: none; 
+    border-color: Transparent;
+    outline: none;
+    background-color: transparent;
+    font-size: 20px;
+}
+
+.post-btn{
+    background-color: black;
+    font-size: 16px;
+    color: white;
+}
+

@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 import CustomBarChart from '../../Components/CustomBarChart/CustomBarChart'
 import CustomLineChart from '../../Components/CustomLineChart/CustomLineChart'
 import CustomPieChart from '../../Components/CustomPieChart/CustomPieChart'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../../Api/axios'
 
 // Asset
 import bestPerformer from '../../Assets/best-performer-icon.svg'

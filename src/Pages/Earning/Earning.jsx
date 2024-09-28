@@ -5,7 +5,8 @@ import CustomDatePicker from '../../Components/CustomDatePicker/CustomDatePicker
 import TableWithPagination from '../../Components/TableWithPagination/TableWithPagination'
 import { subDays } from 'date-fns'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../../Api/axios'
 import Loader from '../../Components/Loader/Loader'
 
 import { useAuth } from '../../Provider/AuthProvider'

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import BasePage from '../BasePage/BasePage'
 import UploadFile from '../../Components/UploadFile/UploadFile';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../Api/axios'
 import Loader from '../../Components/Loader/Loader'
 import TableWithPagination from '../../Components/TableWithPagination/TableWithPagination';
 export default function PDFDashboard() {
@@ -22,8 +23,13 @@ export default function PDFDashboard() {
 
             },
             {
-                label: 'Output',
+                label: 'Output Without Contacts',
                 field: 'output',
+
+            },
+            {
+                label: 'Output With Contacts',
+                field: 'output_with_contacts',
 
             },
             {
@@ -34,14 +40,12 @@ export default function PDFDashboard() {
         ]
     })
 
-    useEffect(()=>{
-        console.log(fileSelected,'11111111111111111111111')
-    },[fileSelected])
+    
 
     const handleFileChange = (event) => {
         const selectedFiles = event.target.files;
         const formData = new FormData();
-        console.log(selectedFiles,'======================================')
+        
         if (selectedFiles.length > 0) {
             Array.from(selectedFiles).forEach((file) => {
                 if (file.type === "application/pdf") {
@@ -98,6 +102,7 @@ export default function PDFDashboard() {
             for (var i = 0; i < data.length; i++) {
                 data[i]['input'] = <a target="_blank" href={axios.defaults.baseURL + '/pdf/download/?filename=' + data[i]['input']}>{data[i]['input']}</a>
                 data[i]['output'] = <a target="_blank" href={axios.defaults.baseURL + '/pdf/download/?filename=' + data[i]['output']}>{data[i]['output']}</a>
+                data[i]['output_with_contacts'] = <a target="_blank" href={axios.defaults.baseURL + '/pdf/download/?filename=' + data[i]['output_with_contacts']}>{data[i]['output_with_contacts']}</a>
 
             }
 

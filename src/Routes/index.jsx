@@ -14,6 +14,7 @@ import PDFDashboard from "../Pages/PDFDashboard/PDFDashboard";
 import Instagram from "../Pages/Instagram/Instagram";
 import PostHistory from "../Pages/PostHistory/PostHistory";
 import Payment from "../Pages/Payment/Payment";
+import Project from  '../Pages/Project/Project'
 const Routes = () => {
   const { token,userDetail } = useAuth();
 
@@ -195,6 +196,25 @@ const Routes = () => {
     },
   ];
 
+
+  const routesForDeveloperAndVAAndAdmin =[
+    {
+      path: "/",
+      element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
+      children: [
+        
+        {
+          path: "/projects",
+          element: <Project/>,
+        },
+       
+        
+       
+      ],
+    },
+  ];
+  
+
   // Define routes accessible only to non-authenticated users
   const routesForNotAuthenticatedOnly = [
     {
@@ -205,11 +225,7 @@ const Routes = () => {
   ];
 
 
-  // useEffect(()=>{
-    
-  //   console.log(!token,!Object.keys(userDetail).length,!token || !Object.keys(userDetail).length)
-  // },[token,userDetail])
-  console.log(userDetail,'==========================')
+ 
   const router = createBrowserRouter([
     // ...routesForPublic,
     ...((!token || !userDetail) ? routesForNotAuthenticatedOnly : []),
@@ -218,6 +234,7 @@ const Routes = () => {
     ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'product')? routesForProductAndAdminOnly:[]),
     ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'pdf')? routesForPDFandAdminOnly:[]),
     ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'instagram')? routesForInstagramandAdminOnly:[]),
+    // ...(token && userDetail &&(userDetail['role'] === 'admin' || userDetail['role']==='developer')?routesForDeveloperAndVAAndAdmin:[]),
     ...(token && userDetail &&  userDetail['role'] === 'product'? routesForProductOnly:[]),
     ...(token && userDetail &&  userDetail['role'] === 'pdf'? routesForPDFOnly:[]),
     ...(token && userDetail &&  userDetail['role'] === 'instagram'? routesForInstagramOnly:[]),

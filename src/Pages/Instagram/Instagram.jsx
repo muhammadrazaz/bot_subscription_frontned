@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import BasePage from '../BasePage/BasePage'
 import UploadFile from '../../Components/UploadFile/UploadFile'
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../Api/axios'
 import { Modal } from "react-bootstrap";
 import './Instagram.css'
 import Loader from '../../Components/Loader/Loader';
@@ -9,18 +10,28 @@ import { useAuth } from '../../Provider/AuthProvider';
 export default function Instagram() {
     const { token } = useAuth()
     const [fileSelected, setFileSelected] = useState();
-    const [loader, setLoader] = useState(false)
+    const [loader, setLoader] = useState(true)
     const [errors, setErrors] = useState({})
-    const [caption, setCaption] = useState()
     const [generatedCaptions, setGeneratedCaptions] = useState([])
-    const [isSelect, setIsSelect] = useState(false)
-    const [postData, setPostData] = useState({})
+   
     const [isOTP, setIsOTP] = useState(false)
     const [OTP, setOTP] = useState()
     const [isConnection, setIsConnection] = useState(false)
-    const wsUrl = 'ws://143.244.180.220:8001/ws/ac/?token=' + token;
+    
     const socketRef = useRef(null);
+    const [isInstagramConnect, setIsInstagramConnect] = useState(false)
+    const [isSetUpCaptionPrompt, setIsSetUpCaptionPrompt] = useState(false)
+    const [isPrompt, setIsPrompt] = useState(false)
+    const [connectData, setConnectData] = useState({})
+    const [username, setUsername] = useState('')
+    const [captionPrompt, setCaptionPrompt] = useState('')
 
+
+    const url = axios.defaults.baseURL
+    
+
+    const wsUrl = 'ws://'+url.split('//')[1].split('/')[0]+'/ws/ac/?token=' + token;
+    
     useEffect(() => {
 
         socketRef.current = new WebSocket(wsUrl);
@@ -72,25 +83,38 @@ export default function Instagram() {
             socketRef.current.send(OTP);
         }
     }
-    const changePostData = (e) => {
-        const { name, value } = e.target
 
-        setPostData(prevState => ({
+
+    useEffect(() => {
+        getUsernameAndPropmt()
+    }, [])
+
+    const changeConnectData = (e) => {
+        const { name, value } = e.target
+        setConnectData(prevState => ({
             ...prevState,
             [name]: value
         }))
     }
+    // const changePostData = (e) => {
+    //     const { name, value } = e.target
+
+    //     setPostData(prevState => ({
+    //         ...prevState,
+    //         [name]: value
+    //     }))
+    // }
 
 
-    useEffect(() => {
-        if (generatedCaptions.length) {
-            setIsSelect(true)
-        }
-        else {
-            setIsSelect(false)
-        }
+    // useEffect(() => {
+    //     if (generatedCaptions.length) {
+    //         setIsSelect(true)
+    //     }
+    //     else {
+    //         setIsSelect(false)
+    //     }
 
-    }, [generatedCaptions])
+    // }, [generatedCaptions])
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -107,14 +131,75 @@ export default function Instagram() {
 
     };
 
+
+
+    const getUsernameAndPropmt =  () => {
+        setLoader(true)
+         axios.get("connect-instagram/")
+            .then(response => {
+                
+                setUsername(response.data.username)
+                setIsPrompt(response.data.prompt)
+                setCaptionPrompt(response.data.prompt)
+                setLoader(false)
+            }).catch(error => {
+                
+                
+                setLoader(false)
+            })
+    }
+
+    const connectAPI = async (e) => {
+        e.preventDefault()
+        setLoader(true)
+        await axios.post("connect-instagram/", connectData)
+            .then(response => {
+                console.log(response)
+                setErrors({})
+
+                setConnectData({})
+                setLoader(false)
+                setIsInstagramConnect(false)
+                alert(response.data.message)
+            }).catch(error => {
+                console.log(error)
+                if (error.response.status === 400) {
+                    setErrors(error.response.data)
+                }
+                setLoader(false)
+            })
+
+    }
+
+    const setCaptionPromptAPI = async (e) => {
+        e.preventDefault()
+        setLoader(true)
+        await axios.post("set-up-prompt/", { 'prompt': captionPrompt })
+            .then(response => {
+                console.log(response)
+                setErrors({})
+                setIsPrompt(true)
+                setIsSetUpCaptionPrompt(false)
+                setLoader(false)
+
+            }).catch(error => {
+                console.log(error)
+                if (error.response.status === 400) {
+                    setErrors(error.response.data)
+                }
+                setLoader(false)
+            })
+    }
+
+
     const uplaodFile = async (e) => {
         e.preventDefault()
-        
+
         setLoader(true)
 
         const formData = new FormData();
         formData.append('file', fileSelected);
-        formData.append('caption', caption)
+
 
         await axios.post("generate-caption/", formData, {
             headers: {
@@ -137,14 +222,16 @@ export default function Instagram() {
 
     const postApi = async (e) => {
         e.preventDefault()
-       
+
+        const form = e.target;
+        const caption = form.elements.caption.value;
+
         setLoader(true)
 
         const formData = new FormData();
         formData.append('file', fileSelected);
-        formData.append('caption', postData['caption'] || '')
-        formData.append('username', postData['username'] || '')
-        formData.append('password', postData['password'] || '')
+        formData.append('caption', caption || '')
+        
 
         await axios.post("post-on-instagram/", formData, {
             headers: {
@@ -154,10 +241,9 @@ export default function Instagram() {
             console.log(response)
             setErrors({})
 
-            setPostData({})
-            setIsSelect(false)
+ 
             setFileSelected()
-            setCaption()
+            setGeneratedCaptions([])
             setLoader(false)
             alert(response.data.message)
         }).catch(error => {
@@ -172,82 +258,113 @@ export default function Instagram() {
         <BasePage title="Instgram">
             {
                 loader && <Loader />
+
             }
-            <UploadFile fileSelected={fileSelected} setFileSelected={setFileSelected} errors={errors} handleFileChange={handleFileChange} type="image/*" handleDrop={handleDrop} multiple={false} uplaodFile={uplaodFile} caption={caption} setCaption={setCaption} instagram={true} />
+
+            <div>
+                <button className={'macan-semibold py-2 px-3 top-btn ' + (isInstagramConnect ? 'active-border' : '')} onClick={() => { setIsSetUpCaptionPrompt(false); setIsInstagramConnect(!isInstagramConnect) }}>{username ? username + ' √' : 'Connect Instagram'}</button>
+                <button className={'macan-semibold py-2 px-3 top-btn ms-4 ' + (isSetUpCaptionPrompt ? 'active-border' : '')} onClick={() => { setIsInstagramConnect(false); setIsSetUpCaptionPrompt(!isSetUpCaptionPrompt) }}>Set-up Caption Prompt{isPrompt ? ' √' : ''}</button>
+            </div>
 
 
-            <Modal
-                show={isSelect}
-                onHide={() => { setIsSelect(false) }}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-
-            >
-
-                <Modal.Body style={{ maxHeight: "80vh", overflow: 'auto' }}>
-
-                    <div className='p-3 h-100' >
-                        <p className='text-center font-1 macan-bold '>Add New Post</p>
-                        <p className='font-2 macan-semibold'>Select post</p>
-                        <form onSubmit={postApi} className='p-2'>
-                            <div className="row">
-                                {generatedCaptions.map((value, index) => {
-                                    return (
-                                        <div className="col-4 " key={index}>
-                                            <input type="radio" name="caption" id={`caption-${index}`} value={value} className='d-none' onChange={changePostData} />
-                                            <label htmlFor={`caption-${index}`} className='border h-100'>{value}</label>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                            <div className="row w-100 my-4">
-                                <div className="col">
-                                    <textarea name='caption' value={postData.caption} onChange={changePostData} className={'w-100 form-control ' + (errors.caption ? 'is-invalid' : '')} rows={5}></textarea>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="col">
-                                    <div class="input-field">
-                                        <i class="fas fa-user"></i>
-                                        <input type="text" name="username" placeholder="Username" value={postData['username']} onChange={changePostData} className={'username' in errors ? 'form-control is-invalid' : 'form-control'} />
-                                        <div></div>
-                                        <div class="invalid-feedback">
-                                            {errors.username}
-                                        </div>
-                                    </div>
-                                    <div class="input-field">
-                                        <i class="fas fa-lock"></i>
-                                        <input type="password" name="password" value={postData['password']} placeholder="Password" onChange={changePostData} className={'password' in errors ? 'form-control is-invalid' : 'form-control'} />
-                                        <div></div>
-                                        <div class="invalid-feedback">
-                                            {errors.password}
-                                        </div>
+            {
+                isInstagramConnect && <div className='d-flex  align-items-center justify-content-center' style={{ height: '70vh' }}>
+                    <form className="insta-form p-4" onSubmit={connectAPI}>
+                        <div className="row" style={{ width: '90%' }}>
+                            <div className="col-12">
+                                <div class="input-field my-3">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" name="username" placeholder="Username" value={connectData['username']} onChange={changeConnectData} className={'username' in errors ? 'form-control is-invalid' : 'form-control'} />
+                                    <div></div>
+                                    <div class="invalid-feedback">
+                                        {errors.username}
                                     </div>
                                 </div>
                             </div>
+                            <div className="col-12">
+                                <div class="input-field my-3">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" name="password" value={connectData['password']} placeholder="Password" onChange={changeConnectData} className={'password' in errors ? 'form-control is-invalid' : 'form-control'} />
+                                    <div></div>
+                                    <div class="invalid-feedback">
+                                        {errors.password}
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button className="connect-btn macan-semibold py-2 px-3 mt-4" type='submit'>
+                                    Connect
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-                            <div className="w-100 text-center mt-2">
-                                <button type='submit' className='btn btn-dark pt-2 pb-2 m-0 ms-3'>Post     </button>
+
+
+
+            }
+
+            {
+                isSetUpCaptionPrompt && <div className='d-flex  align-items-center justify-content-center' style={{ height: '70vh' }}>
+                    <form className="insta-form p-4" onSubmit={setCaptionPromptAPI}>
+                        <div className="row" style={{ width: '90%' }}>
+                            <div className="col-12 propmt-txt macan-regular">
+                                <p>ChatGPT will write 3 captions of the images uploaded based on this prompt. </p>
+                            </div>
+                            <div className="col-12 my-4">
+                                <div>
+                                    <textarea name="prompt" id="" className={'w-100 p-3 macan-semibold form-control ' + (errors.prompt ? 'is-invalid' : '')} rows={8} style={{ resize: 'none', fontSize: '16px' }} value={captionPrompt} onChange={(e) => { setCaptionPrompt(e.target.value) }}></textarea>
+                                    <div class="invalid-feedback">
+                                        {errors.prompt}
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button className="connect-btn macan-semibold py-2 px-3">
+                                    Set-up Prompt
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+
+
+            }
+
+
+
+
+            {(username && !isInstagramConnect) && (isPrompt && !isSetUpCaptionPrompt) && (!generatedCaptions.length) && < UploadFile fileSelected={fileSelected} setFileSelected={setFileSelected} errors={errors} handleFileChange={handleFileChange} type="image/*" handleDrop={handleDrop} multiple={false} uplaodFile={uplaodFile} />}
+
+
+            {generatedCaptions.length &&
+
+                <div className='row mt-5'>
+
+                    {generatedCaptions.map((data,index)=>{
+                        return  <div className="col-4">
+                        <p className='macan-semibold' style={{ fontSize: '16px' }}>Caption {index+1}</p>
+                        <form className="catption-box p-4 mt-3 align-items-start" onSubmit={postApi}>
+                            <textarea name="caption" id="" className='w-100 caption-textarea macan-semibold' rows={10} style={{ resize: 'none' }} value={data}></textarea>
+                            <div>
+
+                                <button className='post-btn py-2 px-5 macan-semibold' type='submit'>Post</button>
                             </div>
                         </form>
-
-
-
-
-
                     </div>
+                    })}
+                   
+
+                </div>}
 
 
 
 
 
 
-
-                </Modal.Body>
-
-            </Modal>
 
             <Modal
                 show={isOTP}

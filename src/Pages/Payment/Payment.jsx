@@ -5,7 +5,8 @@ import CustomDatePicker from '../../Components/CustomDatePicker/CustomDatePicker
 import DownloadButton from '../../Components/DownloadButton/DownloadButton'
 import TableWithPagination from '../../Components/TableWithPagination/TableWithPagination'
 import { Modal } from 'react-bootstrap'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../../Api/axios'
 import { subDays } from 'date-fns'
 
 

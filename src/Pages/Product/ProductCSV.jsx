@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import BasePage from '../BasePage/BasePage';
 import './Product.css';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../Api/axios'
 import Loader from '../../Components/Loader/Loader';
 import UploadFile from '../../Components/UploadFile/UploadFile'
 export default function ProductCSV() {

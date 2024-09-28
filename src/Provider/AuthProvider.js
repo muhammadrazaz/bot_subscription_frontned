@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+import axios from "../Api/axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const AuthContext = createContext();
@@ -17,15 +18,19 @@ const AuthProvider = ({ children }) => {
     setUserDetail_(newData);
   };
 
+  // useEffect(()=>{
+  //   // axios.defaults.baseURL = 'http://143.244.180.220:8001/api';
+  //   axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+  // },[])
+
 
 
 
   useEffect(() => {
-    axios.defaults.baseURL = 'http://143.244.180.220:8001/api';
-    // axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
-    axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+    
     if (token) {
-      setTimeout(() => {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+    
         setLoader(true)
         localStorage.setItem('token', token);
 
@@ -49,7 +54,7 @@ const AuthProvider = ({ children }) => {
             }
             setLoader(false)
           })
-      }, 2000)
+     
 
 
     } else {

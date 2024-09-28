@@ -58,9 +58,7 @@ export default function UploadFile(props) {
                 <div class="invalid-feedback w-100 text-center">
                     {props.erorrs && props.errors.file}
                 </div>
-                {
-                    props.instagram && <input className='input-field' type="text" name="caption" value={props.caption} onChange={(e)=>{props.setCaption(e.target.value)}} placeholder='Enter Caption'/>
-                }
+               
                 
                 {props.fileSelected && <button className="file-btn font-2 macan-semibold opacity-75" type='submit'>Upload</button>}
 

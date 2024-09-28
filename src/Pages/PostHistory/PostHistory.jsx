@@ -3,7 +3,8 @@ import BasePage from '../BasePage/BasePage'
 import TableWithPagination from '../../Components/TableWithPagination/TableWithPagination'
 import DownloadButton from '../../Components/DownloadButton/DownloadButton'
 import Loader from '../../Components/Loader/Loader'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../../Api/axios'
 import { useParams } from 'react-router-dom'
 
 export default function PostHistory() {
