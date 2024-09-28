@@ -29,10 +29,10 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     
     if (token) {
+      
+      setLoader(true)
+      localStorage.setItem('token', token);
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-    
-        setLoader(true)
-        localStorage.setItem('token', token);
 
         axios.get("user/")
           .then(response => {
