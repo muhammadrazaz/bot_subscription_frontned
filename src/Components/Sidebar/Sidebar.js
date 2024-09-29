@@ -95,10 +95,19 @@ export default function Sidebar(props) {
                         </MDBTooltip>
                     }
 
-{
+                    {
                         userDetail && userDetail['role'] == "admin" && <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Payments" placement='right'>
                             <NavLink to='/payment' className={window.location.href.includes('payment') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
                                 <img src={paymentIcon} alt="" style={{ height: '20px' }} />
+                            </NavLink>
+
+                        </MDBTooltip>
+                    }
+
+                    {
+                        userDetail && userDetail['role'] == "admin" && <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Projects" placement='right'>
+                            <NavLink to='/project' className={window.location.href.includes('project') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={productIcon} alt="" style={{ height: '20px' }} />
                             </NavLink>
 
                         </MDBTooltip>

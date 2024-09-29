@@ -131,6 +131,20 @@ export default function Instagram() {
 
     };
 
+    const handleInputChange = (e, index) => {
+        const newValue = e.target.value;
+    
+        setGeneratedCaptions(prevState => {
+            // Create a shallow copy of the previous state
+            const updatedCaptions = [...prevState];
+            
+            // Update the value at the specific index
+            updatedCaptions[index] = newValue;
+            
+            // Return the updated array as the new state
+            return updatedCaptions;
+        });
+    };
 
 
     const getUsernameAndPropmt =  () => {
@@ -167,6 +181,7 @@ export default function Instagram() {
                     setErrors(error.response.data)
                 }
                 setLoader(false)
+                getUsernameAndPropmt()
             })
 
     }
@@ -348,7 +363,7 @@ export default function Instagram() {
                         return  <div className="col-4">
                         <p className='macan-semibold' style={{ fontSize: '16px' }}>Caption {index+1}</p>
                         <form className="catption-box p-4 mt-3 align-items-start" onSubmit={postApi}>
-                            <textarea name="caption" id="" className='w-100 caption-textarea macan-semibold' rows={10} style={{ resize: 'none' }} value={data}></textarea>
+                            <textarea name="caption" id="" className='w-100 caption-textarea macan-semibold' rows={10} style={{ resize: 'none' }} value={data} onChange={(e) => handleInputChange(e, index)} ></textarea>
                             <div>
 
                                 <button className='post-btn py-2 px-5 macan-semibold' type='submit'>Post</button>

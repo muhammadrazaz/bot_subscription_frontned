@@ -158,6 +158,10 @@ const Routes = () => {
           path: "/payment/",
           element: <Payment/>,
         },
+        {
+          path: "/project/",
+          element: <Project/>,
+        },
       ],
     },
   ];
