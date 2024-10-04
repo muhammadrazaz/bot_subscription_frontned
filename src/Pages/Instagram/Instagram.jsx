@@ -297,15 +297,9 @@ export default function Instagram() {
 
             }
 
-            <div className='row'>
-                <div className="col-md-6">
-
+            <div className='insta-button'>
                 <button className={'macan-semibold py-2 px-3 top-btn my-1' + (isInstagramConnect ? 'active-border' : '')} onClick={() => { setIsSetUpCaptionPrompt(false); setIsInstagramConnect(!isInstagramConnect) }}>{username ? username + ' √' : 'Connect Instagram'}</button>
-                </div>
-                <div className="col-md-6">
-
                 <button className={'macan-semibold py-2 px-3 top-btn ms-md-4 my-1' + (isSetUpCaptionPrompt ? 'active-border' : '')} onClick={() => { setIsInstagramConnect(false); setIsSetUpCaptionPrompt(!isSetUpCaptionPrompt) }}>Set-up Caption Prompt{isPrompt ? ' √' : ''}</button>
-                </div>
             </div>
 
 
