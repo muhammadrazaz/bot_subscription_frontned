@@ -89,11 +89,11 @@ export default function Instagram() {
 
 
     const getIP = async () => {
-        setLoader(true)
-        const response = await fetch('https://ipinfo.io/json');
+        // setLoader(true)
+        const response = await fetch('https://ipinfo.io/json')
         const data = await response.json();
-        setLoader(false)
-        console.log(data,data.country)
+        // setLoader(false)
+        // console.log(data,data.country)
         setConnectData(prevState =>({
             ...prevState,
             'latitude' : data.loc.split(',')[0],
@@ -177,9 +177,9 @@ export default function Instagram() {
     };
 
 
-    const getUsernameAndPropmt = async () => {
+    const getUsernameAndPropmt =  () => {
         setLoader(true)
-        await axios.get("connect-instagram/")
+         axios.get("connect-instagram/")
             .then(response => {
 
                 setUsername(response.data.username)
