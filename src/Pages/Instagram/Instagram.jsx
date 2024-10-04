@@ -89,8 +89,10 @@ export default function Instagram() {
 
 
     const getIP = async () => {
+        setLoader(true)
         const response = await fetch('https://ipinfo.io/json');
         const data = await response.json();
+        setLoader(false)
         console.log(data,data.country)
         setConnectData(prevState =>({
             ...prevState,
@@ -108,6 +110,14 @@ export default function Instagram() {
         getUsernameAndPropmt()
         // getIP()
     }, [])
+
+    useEffect(()=>{
+        if(!connectData.city_name){
+            console.log(connectData,'1111111111')
+            getIP()
+        }
+        console.log(connectData,'===============')
+    },[connectData])
 
     const changeConnectData = (e) => {
         const { name, value } = e.target
@@ -167,9 +177,9 @@ export default function Instagram() {
     };
 
 
-    const getUsernameAndPropmt = () => {
+    const getUsernameAndPropmt = async () => {
         setLoader(true)
-        axios.get("connect-instagram/")
+        await axios.get("connect-instagram/")
             .then(response => {
 
                 setUsername(response.data.username)
@@ -185,7 +195,9 @@ export default function Instagram() {
 
     const connectAPI = async (e) => {
         e.preventDefault()
-        await getIP()
+        
+
+        console.log('test')
         setLoader(true)
         
         await axios.post("connect-instagram/", connectData)
@@ -293,7 +305,7 @@ export default function Instagram() {
         })
     }
     return (
-        <BasePage title="Instgram">
+        <BasePage title="Instagram">
             {
                 loader && <Loader />
 
