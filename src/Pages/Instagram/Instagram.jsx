@@ -106,7 +106,7 @@ export default function Instagram() {
 
     useEffect(() => {
         getUsernameAndPropmt()
-        getIP()
+        // getIP()
     }, [])
 
     const changeConnectData = (e) => {
@@ -185,8 +185,9 @@ export default function Instagram() {
 
     const connectAPI = async (e) => {
         e.preventDefault()
+        await getIP()
         setLoader(true)
-        console.log(connectData)
+        
         await axios.post("connect-instagram/", connectData)
             .then(response => {
                 console.log(response)
@@ -196,13 +197,14 @@ export default function Instagram() {
                 setLoader(false)
                 setIsInstagramConnect(false)
                 alert(response.data.message)
+                getUsernameAndPropmt()
             }).catch(error => {
                 console.log(error)
                 if (error.response.status === 400) {
                     setErrors(error.response.data)
                 }
                 setLoader(false)
-                getUsernameAndPropmt()
+                
             })
 
     }
