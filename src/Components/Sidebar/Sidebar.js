@@ -86,6 +86,8 @@ export default function Sidebar(props) {
 
 
 
+
+
                     {
                         userDetail && userDetail['role'] == "admin" && <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Users" placement='right'>
                             <NavLink to='/users' className={window.location.href.includes('users') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
@@ -108,6 +110,15 @@ export default function Sidebar(props) {
                         userDetail && userDetail['role'] == "admin" && <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Projects" placement='right'>
                             <NavLink to='/project' className={window.location.href.includes('project') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
                                 <img src={productIcon} alt="" style={{ height: '20px' }} />
+                            </NavLink>
+
+                        </MDBTooltip>
+                    }
+
+                    {
+                        userDetail && (userDetail['role'] === 'admin' || userDetail['role'] === 'developer' || userDetail['role'] === 'VA') && <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Open Task" placement='right'>
+                            <NavLink to='/open-tasks' className={window.location.href.includes('/open-tasks') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={historyIcon} alt="" />
                             </NavLink>
 
                         </MDBTooltip>

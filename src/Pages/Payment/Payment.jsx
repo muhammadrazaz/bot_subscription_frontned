@@ -14,9 +14,57 @@ export default function Payment() {
   const [loader, setLoader] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
   const [dates, setDates] = useState([subDays(new Date(), 30), new Date()])
-  const [tableData, setTableData] = useState({})
   const [paymentData, setPaymentData] = useState({})
   const [errors, setErrors] = useState({})
+  const [tableData, setTableData] = useState({
+    columns: [
+      {
+        label: 'Invoice ID',
+        field: 'invoice_id',
+
+      },
+      {
+        label: 'Client Name',
+        field: 'client_name',
+
+      },
+      {
+        label: 'Client Email',
+        field: 'client_email',
+
+      },
+      {
+        label: 'Address',
+        field: 'address'
+      },
+      {
+        label: 'Amount',
+        field: 'amount'
+      },
+      {
+        label: 'MISC Details',
+        field: 'misc_details'
+      },
+      {
+        label: 'Payment Status',
+        field: 'payment_status'
+      },
+      {
+        label: 'Description',
+        field: 'description'
+      },
+      {
+        label: 'Date Time',
+        field: 'date_time'
+      },
+
+    ]
+  })
+
+
+  useEffect(()=>{
+    getPaymentApi()
+  },[])
 
 
 
@@ -26,6 +74,25 @@ export default function Payment() {
       ...prevState,
       [name]: value
     }))
+  }
+
+  const getPaymentApi = (e) =>{
+    setLoader(true)
+    axios.get('payment/')
+      .then(response => {
+        console.log(response)
+        setTableData(prevState =>({
+          ...prevState,
+          rows : response.data
+        }))
+        setLoader(false)
+      }).catch(error => {
+        console.log(error)
+        if (error.response.status === 400) {
+          setErrors(error.response.data)
+        }
+        setLoader(false)
+      })
   }
 
   const addPaymentApi = async (e) => {
@@ -51,20 +118,20 @@ export default function Payment() {
     <BasePage title="Payments">
       {loader && <Loader />}
       <div className="row">
-        <div className="col-sm-2">
+        <div className="col-md-2 my-1">
           <CustomDatePicker dates={dates} setDates={setDates} />
         </div>
-        <div className="col-sm-2">
-          <button className='btn btn-dark pt-2 pb-2 m-0 h-100 ms-3' onClick={() => { setIsAdd(true) }}>Add New</button>
+        <div className="col-md-6 my-1">
+          <button className='btn btn-dark pt-2 pb-2 m-0 h-100 ms-md-3' onClick={() => { setIsAdd(true) }}>Add New</button>
         </div>
-        <div className="col-sm-8 text-end">
+        <div className="col-md-4 text-end my-1">
 
 
           <DownloadButton data={tableData} filename="PaymentReport.csv" />
 
         </div>
 
-        <div className='desktop' style={{ height: '95%' }}>
+        <div style={{ height: '95%' }}>
           <TableWithPagination data={tableData} />
         </div>
       </div>

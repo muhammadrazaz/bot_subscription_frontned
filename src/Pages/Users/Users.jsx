@@ -211,10 +211,10 @@ export default function Users() {
 
           </div>
         </div>
-        <div className="col-2 my-2" style={{ textAlign: 'end' }}>
+        <div className="col-md-4 my-2" style={{ textAlign: 'end' }}>
           
             {
-              userDetail['role'] === 'admin' && <select name="type" className='h-100 w-100' style={{backgroundColor:'white',border:'1px solid #e4e5e7',borderRadius:'2px'}} onChange={handleChangeType}>
+              userDetail['role'] === 'admin' && <select name="type" className='h-100 w-100 py-2' style={{backgroundColor:'white',border:'1px solid #e4e5e7',borderRadius:'2px'}} onChange={handleChangeType}>
                 
                 <option value="subscription" >Subscription Users</option>
                 <option value="product">Product Users</option>
@@ -232,7 +232,7 @@ export default function Users() {
 
         </div>
 
-        <div className='desktop' style={{ height: '95%' }}>
+        <div  style={{ height: '95%' }}>
           <TableWithPagination data={userData} />
         </div>
       </div>

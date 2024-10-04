@@ -13,11 +13,11 @@ export default function Instagram() {
     const [loader, setLoader] = useState(true)
     const [errors, setErrors] = useState({})
     const [generatedCaptions, setGeneratedCaptions] = useState([])
-   
+
     const [isOTP, setIsOTP] = useState(false)
     const [OTP, setOTP] = useState()
     const [isConnection, setIsConnection] = useState(false)
-    
+
     const socketRef = useRef(null);
     const [isInstagramConnect, setIsInstagramConnect] = useState(false)
     const [isSetUpCaptionPrompt, setIsSetUpCaptionPrompt] = useState(false)
@@ -25,13 +25,14 @@ export default function Instagram() {
     const [connectData, setConnectData] = useState({})
     const [username, setUsername] = useState('')
     const [captionPrompt, setCaptionPrompt] = useState('')
+    
 
 
     const url = axios.defaults.baseURL
-    
 
-    const wsUrl = 'ws://'+url.split('//')[1].split('/')[0]+'/ws/ac/?token=' + token;
-    
+
+    const wsUrl = 'ws://' + url.split('//')[1].split('/')[0] + '/ws/ac/?token=' + token;
+
     useEffect(() => {
 
         socketRef.current = new WebSocket(wsUrl);
@@ -84,9 +85,28 @@ export default function Instagram() {
         }
     }
 
+  
+
+
+    const getIP = async () => {
+        const response = await fetch('https://ipinfo.io/json');
+        const data = await response.json();
+        console.log(data,data.country)
+        setConnectData(prevState =>({
+            ...prevState,
+            'latitude' : data.loc.split(',')[0],
+            'longitude' : data.loc.split(',')[1],
+            'country_code' : data.country,
+            'city_name' : data.city,
+
+        }))
+      
+    }
+
 
     useEffect(() => {
         getUsernameAndPropmt()
+        getIP()
     }, [])
 
     const changeConnectData = (e) => {
@@ -133,32 +153,32 @@ export default function Instagram() {
 
     const handleInputChange = (e, index) => {
         const newValue = e.target.value;
-    
+
         setGeneratedCaptions(prevState => {
             // Create a shallow copy of the previous state
             const updatedCaptions = [...prevState];
-            
+
             // Update the value at the specific index
             updatedCaptions[index] = newValue;
-            
+
             // Return the updated array as the new state
             return updatedCaptions;
         });
     };
 
 
-    const getUsernameAndPropmt =  () => {
+    const getUsernameAndPropmt = () => {
         setLoader(true)
-         axios.get("connect-instagram/")
+        axios.get("connect-instagram/")
             .then(response => {
-                
+
                 setUsername(response.data.username)
                 setIsPrompt(response.data.prompt)
                 setCaptionPrompt(response.data.prompt)
                 setLoader(false)
             }).catch(error => {
-                
-                
+
+
                 setLoader(false)
             })
     }
@@ -166,6 +186,7 @@ export default function Instagram() {
     const connectAPI = async (e) => {
         e.preventDefault()
         setLoader(true)
+        console.log(connectData)
         await axios.post("connect-instagram/", connectData)
             .then(response => {
                 console.log(response)
@@ -246,7 +267,7 @@ export default function Instagram() {
         const formData = new FormData();
         formData.append('file', fileSelected);
         formData.append('caption', caption || '')
-        
+
 
         await axios.post("post-on-instagram/", formData, {
             headers: {
@@ -256,7 +277,7 @@ export default function Instagram() {
             console.log(response)
             setErrors({})
 
- 
+
             setFileSelected()
             setGeneratedCaptions([])
             setLoader(false)
@@ -276,9 +297,15 @@ export default function Instagram() {
 
             }
 
-            <div>
-                <button className={'macan-semibold py-2 px-3 top-btn ' + (isInstagramConnect ? 'active-border' : '')} onClick={() => { setIsSetUpCaptionPrompt(false); setIsInstagramConnect(!isInstagramConnect) }}>{username ? username + ' √' : 'Connect Instagram'}</button>
-                <button className={'macan-semibold py-2 px-3 top-btn ms-4 ' + (isSetUpCaptionPrompt ? 'active-border' : '')} onClick={() => { setIsInstagramConnect(false); setIsSetUpCaptionPrompt(!isSetUpCaptionPrompt) }}>Set-up Caption Prompt{isPrompt ? ' √' : ''}</button>
+            <div className='row'>
+                <div className="col-md-6">
+
+                <button className={'macan-semibold py-2 px-3 top-btn my-1' + (isInstagramConnect ? 'active-border' : '')} onClick={() => { setIsSetUpCaptionPrompt(false); setIsInstagramConnect(!isInstagramConnect) }}>{username ? username + ' √' : 'Connect Instagram'}</button>
+                </div>
+                <div className="col-md-6">
+
+                <button className={'macan-semibold py-2 px-3 top-btn ms-md-4 my-1' + (isSetUpCaptionPrompt ? 'active-border' : '')} onClick={() => { setIsInstagramConnect(false); setIsSetUpCaptionPrompt(!isSetUpCaptionPrompt) }}>Set-up Caption Prompt{isPrompt ? ' √' : ''}</button>
+                </div>
             </div>
 
 
@@ -359,19 +386,19 @@ export default function Instagram() {
 
                 <div className='row mt-5'>
 
-                    {generatedCaptions.map((data,index)=>{
-                        return  <div className="col-4">
-                        <p className='macan-semibold' style={{ fontSize: '16px' }}>Caption {index+1}</p>
-                        <form className="catption-box p-4 mt-3 align-items-start" onSubmit={postApi}>
-                            <textarea name="caption" id="" className='w-100 caption-textarea macan-semibold' rows={10} style={{ resize: 'none' }} value={data} onChange={(e) => handleInputChange(e, index)} ></textarea>
-                            <div>
+                    {generatedCaptions.map((data, index) => {
+                        return <div className="col-4">
+                            <p className='macan-semibold' style={{ fontSize: '16px' }}>Caption {index + 1}</p>
+                            <form className="catption-box p-4 mt-3 align-items-start" onSubmit={postApi}>
+                                <textarea name="caption" id="" className='w-100 caption-textarea macan-semibold' rows={10} style={{ resize: 'none' }} value={data} onChange={(e) => handleInputChange(e, index)} ></textarea>
+                                <div>
 
-                                <button className='post-btn py-2 px-5 macan-semibold' type='submit'>Post</button>
-                            </div>
-                        </form>
-                    </div>
+                                    <button className='post-btn py-2 px-5 macan-semibold' type='submit'>Post</button>
+                                </div>
+                            </form>
+                        </div>
                     })}
-                   
+
 
                 </div>}
 

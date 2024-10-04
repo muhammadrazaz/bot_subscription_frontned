@@ -37,6 +37,7 @@
     font-family: "Macan Bold" !important;
     text-transform: capitalize;
     background-color: rgb(250, 250, 250) !important;
+    white-space: nowrap;
 }
 
 .table-with-pagination td {
@@ -51,11 +52,11 @@
 }
 
 .table-with-pagination td {
-    width: 10px !important;
-    max-width: 10px !important;
+    /* width: 10px !important;
+    max-width: 10px !important; */
     text-align: start;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* overflow: hidden;
+    text-overflow: ellipsis; */
     white-space: nowrap;
     
 

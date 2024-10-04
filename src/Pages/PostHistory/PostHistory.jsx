@@ -7,9 +7,13 @@ import Loader from '../../Components/Loader/Loader'
 import axios from '../../Api/axios'
 import { useParams } from 'react-router-dom'
 
+import { subDays } from 'date-fns'
+import CustomDatePicker from '../../Components/CustomDatePicker/CustomDatePicker'
+
 export default function PostHistory() {
-    const {user_id} = useParams()
-    const [loader,setLoader] = useState(false)
+    const { user_id } = useParams()
+    const [loader, setLoader] = useState(false)
+    const [dates, setDates] = useState([subDays(new Date(), 30), new Date()])
     const [tableData, setTableData] = useState({
         columns: [
             {
@@ -39,47 +43,54 @@ export default function PostHistory() {
         ]
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         getFileData()
-    },[])
+    }, [dates])
 
-    const getFileData = () =>{
+    const getFileData = () => {
         setLoader(true)
-        axios.get('view-posts/',{
-            params :{
-                user_id :user_id
+        axios.get('view-posts/', {
+            params: {
+                user_id: user_id,
+                dates : dates
             }
-        }).then(response =>{
+        }).then(response => {
             console.log(response)
             const data = response.data.rows
-            
 
-              setTableData(prevState =>({
+
+            setTableData(prevState => ({
                 ...prevState,
-                'rows':response.data
-              }))
+                'rows': response.data
+            }))
             setLoader(false)
-        }).catch(error =>{
+        }).catch(error => {
             console.log(error)
             setLoader(false)
         })
     }
-  return (
-    <BasePage title="Post History">
-            {loader && <Loader/>}
+    return (
+        <BasePage title="Post History">
+            {loader && <Loader />}
             <div className="row">
-                
-                <div className="col text-end">
+
+            <div className="col-md-6">
+                <CustomDatePicker dates={dates} setDates={setDates} />
+                </div>
+                <div className="col-md-6 text-end">
 
 
-                    <DownloadButton data={tableData} filename="POstReport.csv" />
+                    <DownloadButton data={tableData} filename="PostReport.csv" />
 
                 </div>
 
-                <div className='desktop' style={{ height: '95%' }}>
+                <div style={{ height: '95%' }}>
                     <TableWithPagination data={tableData} />
                 </div>
+
+                
             </div>
+            
         </BasePage>
-  )
+    )
 }

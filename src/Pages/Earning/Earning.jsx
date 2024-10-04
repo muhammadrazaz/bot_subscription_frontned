@@ -261,12 +261,12 @@ export default function Earning() {
     <BasePage title="Earnings">
       {loader && <Loader/>}
       <div className="row">
-        <div className="col-sm-2">
+        <div className="col-md-2 my-1">
               <CustomDatePicker dates={dates} setDates={setDates} />
         </div>
-        <div className="col-sm-2">
+        <div className="col-md-6 my-1">
         {
-              userDetail['role'] === 'admin' && !user_id && <select name="earning_type" className='h-100 w-100' style={{backgroundColor:'white',border:'1px solid #e4e5e7',borderRadius:'2px'}} onChange={setEarning}>
+              userDetail['role'] === 'admin' && !user_id && <select name="earning_type" className='h-100 py-md-2' style={{backgroundColor:'white',border:'1px solid #e4e5e7',borderRadius:'2px',width:'200px'}} onChange={setEarning}>
                 
                 <option value="subscription" >Subscription Earning</option>
                 <option value="product">Product Earning</option>
@@ -276,14 +276,14 @@ export default function Earning() {
 
             }
         </div>
-        <div className="col-sm-8 text-end">
+        <div className="col-md-4 text-end my-1">
           
 
           <DownloadButton data={tableData} filename="EarningReport.csv" />
 
         </div>
 
-        <div className='desktop' style={{ height: '95%' }}>
+        <div  style={{ height: '95%' }}>
           <TableWithPagination data={tableData} />
         </div>
       </div>

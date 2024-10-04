@@ -24,7 +24,8 @@ export default function CustomDatePicker(props) {
   return (
     <div className="field">
     <DateRangePicker
-    className='w-100 font-2'
+    style={{width:'250px'}}
+    className='font-2'
       format="dd-MM-yyyy"
       showMeridian
       // defaultCalendarValue={[new Date(), new Date()]}

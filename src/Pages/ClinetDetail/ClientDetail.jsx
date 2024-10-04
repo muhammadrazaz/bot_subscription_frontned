@@ -174,7 +174,7 @@ export default function ClientDetail() {
 
         </div>
 
-        <div className='desktop' style={{ height: '95%' }}>
+        <div  style={{ height: '95%' }}>
           <TableWithPagination data={clientData} />
         </div>
       </div>

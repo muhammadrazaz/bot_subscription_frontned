@@ -27,7 +27,7 @@ export default function BasePage({ title,children }) {
                       <Topbar title={title}/>
                       <div id='main' className=''>
                         <Sidebar changeSidebarWidth={changeSidebarWidth} />
-                        <div  className="content-div p-5">
+                        <div  className="content-div p-2 p-md-5">
 
                         {children}
 

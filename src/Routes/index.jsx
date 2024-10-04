@@ -15,6 +15,9 @@ import Instagram from "../Pages/Instagram/Instagram";
 import PostHistory from "../Pages/PostHistory/PostHistory";
 import Payment from "../Pages/Payment/Payment";
 import Project from  '../Pages/Project/Project'
+import ProjectDetail from "../Pages/ProjectDetail/ProjectDetail";
+import OpenTask from "../Pages/OpenTasks/OpenTask";
+import LoginC from "../Pages/Login copy/Login"  ;
 const Routes = () => {
   const { token,userDetail } = useAuth();
 
@@ -208,10 +211,18 @@ const Routes = () => {
       children: [
         
         {
-          path: "/projects",
+          path: "/",
           element: <Project/>,
         },
-       
+
+        {
+          path: "/projects/detail/:project_id",
+          element: <ProjectDetail/>,
+        },
+        {
+          path: "/open-tasks",
+          element: <OpenTask/>,
+        },
         
        
       ],
@@ -224,6 +235,10 @@ const Routes = () => {
     {
       path: "/",
       element: <Login />
+    },
+    {
+      path: "/c",
+      element: <LoginC />
     },
    
   ];
@@ -238,7 +253,7 @@ const Routes = () => {
     ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'product')? routesForProductAndAdminOnly:[]),
     ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'pdf')? routesForPDFandAdminOnly:[]),
     ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'instagram')? routesForInstagramandAdminOnly:[]),
-    // ...(token && userDetail &&(userDetail['role'] === 'admin' || userDetail['role']==='developer')?routesForDeveloperAndVAAndAdmin:[]),
+    ...(token && userDetail &&(userDetail['role'] === 'admin' || userDetail['role']==='developer')?routesForDeveloperAndVAAndAdmin:[]),
     ...(token && userDetail &&  userDetail['role'] === 'product'? routesForProductOnly:[]),
     ...(token && userDetail &&  userDetail['role'] === 'pdf'? routesForPDFOnly:[]),
     ...(token && userDetail &&  userDetail['role'] === 'instagram'? routesForInstagramOnly:[]),

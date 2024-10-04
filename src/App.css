@@ -6,6 +6,11 @@
   --sub-sidebar-left:65px;
 }
 
+body{
+  overflow-x: hidden;
+  
+}
+
 @font-face {
   font-family: 'Macan Regular';
   src: url('./Fonts/MacanPanWeb-Regular.ttf') format('truetype');
