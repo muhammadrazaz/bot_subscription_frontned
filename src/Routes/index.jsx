@@ -17,7 +17,7 @@ import Payment from "../Pages/Payment/Payment";
 import Project from '../Pages/Project/Project'
 import ProjectDetail from "../Pages/ProjectDetail/ProjectDetail";
 import OpenTask from "../Pages/OpenTasks/OpenTask";
-// import Login from '../Pages/InstagramLogin/Login'
+import InstaLogin from '../Pages/InstagramLogin/Login'
 import ForgotPassword from '../Pages/ForgotPassword/ForgotPassword'
 import ResetPassword from "../Pages/ResetPassword/ResetPassword";
 
@@ -293,6 +293,11 @@ const Routes = () => {
     {
       path: "/",
       element: <Login />
+    },
+
+    {
+      path: "/insta-login",
+      element: <InstaLogin />
     },
 
     {

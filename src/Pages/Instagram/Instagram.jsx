@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 // import UploadFile from '../../Components/UploadFile/UploadFile'
 // import axios from 'axios';
 import addIcon from '../../Assets/add.png'
+import postIcon from  '../../Assets/post-icon.png'
 import logoutIcon from '../../Assets/logout.png'
 import axios from '../../Api/axios'
 import { Modal } from "react-bootstrap";
@@ -199,6 +200,10 @@ export default function Instagram() {
         });
     };
 
+    const newPost = (e) =>{
+        setGeneratedCaptions([])
+        setFileSelected()
+    }
 
     const connectClick = () => {
         if (connectText == 'Connect Instagram') {
@@ -261,7 +266,7 @@ export default function Instagram() {
                 setConnectData({})
                 setLoader(false)
                 setIsInstagramConnect(false)
-                alert(response.data.message)
+                // alert(response.data.message)
                 getUsernameAndPropmt()
             }).catch(error => {
                 console.log(error)
@@ -368,8 +373,8 @@ export default function Instagram() {
 
             <div className='insta-button d-flex w-100 justify-content-between'>
                 <div>
-
-                <button className={' py-2 px-3 top-btn my-1' + (isInstagramConnect ? 'active-border' : '')} onClick={connectClick} onMouseEnter={connectButtonHover} onMouseLeave={connectButtonLeave}>{connectText}</button>
+                {generatedCaptions.length !== 0 && <button className='logout-btn p-1  ' onClick={newPost}><img src={postIcon} alt="" /></button>}
+                <button className={' py-2 px-3 top-btn ms-md-4 my-1' + (isInstagramConnect ? 'active-border' : '')} onClick={connectClick} onMouseEnter={connectButtonHover} onMouseLeave={connectButtonLeave}>{connectText}</button>
                 <button className={' py-2 px-3 top-btn ms-md-4 my-1' + (isSetUpCaptionPrompt ? 'active-border' : '')} onClick={() => { setIsInstagramConnect(false); setIsSetUpCaptionPrompt(!isSetUpCaptionPrompt) }}>Set-up Caption Prompt{isPrompt ? ' √' : ''}</button>
                 </div>
 
