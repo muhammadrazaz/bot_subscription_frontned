@@ -512,14 +512,14 @@ export default function Instagram() {
                     </p>
                         }
                             {
-                                (!username && !isInstagramConnect) && 
+                                (!username && !isInstagramConnect && !captionPrompt && !isSetUpCaptionPrompt) && 
                                 <p className='guide-text text-center'>
                                     Connect Insta first
                                 </p>
                             }
                             
                             {
-                        (!captionPrompt && !isSetUpCaptionPrompt) && <p className='guide-text text-center'>
+                        (!username && !isInstagramConnect && !captionPrompt && !isSetUpCaptionPrompt) && <p className='guide-text text-center'>
                         set-up prompt first
                     </p>
                         }

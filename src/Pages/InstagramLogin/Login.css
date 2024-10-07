@@ -17,6 +17,11 @@
     font-size: 17px;
     font-family: 'Rethink Sans';
     color: #303030;
+    width: 100% !important;
+}
+
+.instagram form div{
+    width: 100% !important;
 }
 
 .instagram form input:focus{
