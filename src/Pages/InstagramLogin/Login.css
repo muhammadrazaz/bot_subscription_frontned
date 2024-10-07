@@ -1,0 +1,47 @@
+.instagram{
+    min-height: 100vh;
+    width: 100vw;
+    /* overflow: hidden; */
+}
+.instagram form {
+    width: 515px;
+    max-width: 100%;
+    border: 2px solid #303030;
+    padding: 3rem 5rem;
+}
+
+.instagram form input{
+    border-radius: 0px;
+    border: none;
+    border-bottom: 1px solid #303030 !important;
+    font-size: 17px;
+    font-family: 'Rethink Sans';
+    color: #303030;
+}
+
+.instagram form input:focus{
+    outline: none !important;
+    box-shadow: none !important;
+    padding-left: 0;
+}
+
+.instagram form label{
+    font-size: 17px;
+    font-family: 'Rethink Sans';
+    color: #303030;
+}
+
+.instagram .forgot-password{
+    font-size: 17px;
+    font-family: 'Rethink Sans';
+    color: #303030;
+}
+
+.instagram form button{
+    font-size: 17px;
+    font-family: 'Rethink Sans';
+    font-weight: 800;
+    background-color: #303030;
+    color: white;
+}
+

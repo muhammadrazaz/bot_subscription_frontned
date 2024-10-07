@@ -70,11 +70,14 @@ export default function Login() {
         const container = document.querySelector(".custom-container");
         const leftPanel = document.querySelector(".left-panel");
         const rightPanel = document.querySelector(".right-panel");
+        const signUpForm = document.querySelector(".sign-up-form")
+        
         container.classList.add("sign-up-mode");
         setTimeout(() => {
             
             leftPanel.classList.add("d-none")
             rightPanel.classList.remove("d-none")
+            signUpForm.classList.remove('d-none')
             
         }, 1000);
 
@@ -87,12 +90,18 @@ export default function Login() {
         const leftPanel = document.querySelector(".left-panel");
         leftPanel.classList.remove("d-none")
         const rightPanel = document.querySelector(".right-panel");
-        rightPanel.classList.add("d-none")
-        setTimeout(()=>{
+        
+        const signUpForm = document.querySelector(".sign-up-form")
+        // setTimeout(()=>{
 
             const container = document.querySelector(".custom-container");
             container.classList.remove("sign-up-mode");
-        })
+
+            signUpForm.classList.add("d-none")
+            setTimeout(()=>{
+                rightPanel.classList.add("d-none")
+            },[1000])
+        // },[10])
         setErrors({})
     }
 
@@ -134,7 +143,7 @@ export default function Login() {
                             </div>
                             <img src="img/log.svg" class="image" alt="" />
                         </div>
-                        <form onSubmit={RegisterApi} class="sign-up-form">
+                        <form onSubmit={RegisterApi} class="sign-up-form d-none">
                             <h2 class="title">Sign up</h2>
                             <div class="input-field">
                                 <i class="fas fa-user"></i>

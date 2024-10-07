@@ -153,7 +153,7 @@ export default function Earning() {
   const [tableData,setTableData] = useState({})
 
   useEffect(()=>{
-    if(userDetail['role'] === 'admin'){
+    if(userDetail['role'] === 'admin' || userDetail['role'] === 'VA'){
       if(earningType === 'subscription'){
         setTableData(subscriptionData)
       }
@@ -187,7 +187,7 @@ export default function Earning() {
  
 
   useEffect(()=>{
-    if(userDetail['role']==="admin"){
+    if(userDetail['role'] === 'admin' || userDetail['role'] === 'VA'){
       if(earningType === 'subscription'){
         subcriptionEarningApi()
       }

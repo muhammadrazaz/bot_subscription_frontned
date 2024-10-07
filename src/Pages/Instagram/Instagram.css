@@ -1,15 +1,18 @@
-input[name="caption"] + label{
+/* input[name="caption"] + label{
     border-radius: 7px;
     background-color: #FFF;
     border: 1px solid #e4e5e7;
     padding: 10px;
-}
-input[name="caption"]:checked + label{
+} */
+/* input[name="caption-input"]:checked + textarea{
     background-color:rgb(233, 229, 229);
-}
+    background-color: red !important;
+} */
 
 .top-btn{
-    font-size: 16px;
+    font-size: 17px;
+    font-family: 'Rethink Sans';
+    font-weight: 800;
     background-color: transparent;
     border: 2px solid black;
 }
@@ -23,16 +26,11 @@ input[name="caption"]:checked + label{
     width: 450px;
 }
 
-.connect-btn{
-    background-color: black;
-    font-size: 16px;
-    color: white;
-    width: 100%;
-}
 
 .propmt-txt{
-    font-size: 15px;
-    color: '#000000';
+    font-size: 17px;
+    font-family: 'Rethink Sans';
+    color: #303030;
 }
 
 .catption-box{
@@ -44,12 +42,73 @@ input[name="caption"]:checked + label{
     border-color: Transparent;
     outline: none;
     background-color: transparent;
-    font-size: 20px;
+    font-size: 17px ;
+    font-family: 'Rethink Sans' ;
+    color: #303030 ;
+    font-weight: 800;
 }
 
 .post-btn{
-    background-color: black;
-    font-size: 16px;
-    color: white;
+    font-size: 17px ;
+    font-family: 'Rethink Sans' ;
+    color: #303030 ;
+    font-weight: 800;
 }
 
+.drag-drop-text{
+    font-size: 17px;
+    font-family: 'Rethink Sans';
+}
+.or{
+    font-size: 17px;
+    font-family: 'Rethink Sans';
+}
+
+.file-btn{
+    background-color: transparent !important;
+    border: none;
+    font-size: 17px !important;
+    font-family: 'Rethink Sans' !important;
+    color: #303030 !important;
+    text-decoration: none;
+}
+
+.caption-text{
+    font-size: 17px ;
+    font-family: 'Rethink Sans' ;
+    color: #303030 ;
+}
+.edit-btn{
+    background-color: transparent !important;
+    border: none;
+    font-size: 17px !important;
+    font-family: 'Rethink Sans' !important;
+    color: #303030 !important;
+    text-decoration: none;
+    font-weight: 400 !important;
+}
+
+
+.edit-label:hover{
+    cursor: pointer;
+}
+
+.guide-text{
+    font-size: 100px ;
+    font-family: 'Rethink Sans' ;
+    font-weight: 800;
+    color: #303030 ;
+}
+
+.logout-btn{
+    background-color: #303030;
+   
+    
+}
+@media (max-width: 768px) {
+    /* .insta-button{
+        display: flex;
+        flex-direction: column;
+
+    } */
+}

@@ -43,11 +43,14 @@ export default function ProjectDetail() {
                 field: 'task_timeline',
 
             },
-            {
+            ...(userDetail &&( userDetail.role === 'admin' || userDetail.role === 'developer')  ? [{
                 label: 'Task Cost',
                 field: 'task_cost',
 
-            },
+                },
+      
+              ] : []),
+            
             {
                 label: 'Instruction Video',
                 field: 'instruction_video',

@@ -226,7 +226,7 @@ export default function Users() {
 
             }
             </div>
-        <div className="col-sm-7 text-end">
+        <div className="col-sm-5 text-end">
 
           <DownloadButton data={userData} filename="SubscriptionReport.csv" />
 

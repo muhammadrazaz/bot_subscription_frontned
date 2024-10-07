@@ -50,8 +50,204 @@ export default function Sidebar(props) {
 
                     </div>
 
+                    {
+                        userDetail && userDetail.role === "admin" && <><MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Dashboard" placement='right'>
+                            <NavLink to='/' className={window.location.pathname === '/' ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={dashboardIcon} alt="" />
+                            </NavLink>
 
-                    <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Dashboard" placement='right'>
+                        </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Earnings" placement='right'>
+                                <NavLink to='/earnings' className={window.location.href.includes('earnings') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={saleStatsIcon} alt="" />
+                                </NavLink>
+
+                            </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Users" placement='right'>
+                                <NavLink to='/users' className={window.location.href.includes('users') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={userManagementIcon} alt="" style={{ height: '20px' }} />
+                                </NavLink>
+
+                            </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Projects" placement='right'>
+                                <NavLink to='/project' className={window.location.href.includes('project') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={productIcon} alt="" style={{ height: '20px' }} />
+                                </NavLink>
+
+                            </MDBTooltip>
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Open Task" placement='right'>
+                                <NavLink to='/open-tasks' className={window.location.href.includes('/open-tasks') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={historyIcon} alt="" />
+                                </NavLink>
+
+                            </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Payments" placement='right'>
+                                <NavLink to='/payment' className={window.location.href.includes('payment') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={paymentIcon} alt="" style={{ height: '20px' }} />
+                                </NavLink>
+
+                            </MDBTooltip>
+                        </>
+
+
+                    }
+
+                    {
+                        userDetail && userDetail.role === "VA" && <><MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Dashboard" placement='right'>
+                            <NavLink to='/' className={window.location.pathname === '/' ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={dashboardIcon} alt="" />
+                            </NavLink>
+
+                        </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Earnings" placement='right'>
+                                <NavLink to='/earnings' className={window.location.href.includes('earnings') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={saleStatsIcon} alt="" />
+                                </NavLink>
+
+                            </MDBTooltip>
+
+                            {/* <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Users" placement='right'>
+                                <NavLink to='/users' className={window.location.href.includes('users') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={userManagementIcon} alt="" style={{ height: '20px' }} />
+                                </NavLink>
+
+                            </MDBTooltip> */}
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Projects" placement='right'>
+                                <NavLink to='/project' className={window.location.href.includes('project') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={productIcon} alt="" style={{ height: '20px' }} />
+                                </NavLink>
+
+                            </MDBTooltip>
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Open Task" placement='right'>
+                                <NavLink to='/open-tasks' className={window.location.href.includes('/open-tasks') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={historyIcon} alt="" />
+                                </NavLink>
+
+                            </MDBTooltip>
+                        </>
+
+
+                    }
+
+                    {
+                        userDetail && userDetail.role === "subscription" && <><MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Dashboard" placement='right'>
+                            <NavLink to='/' className={window.location.pathname === '/' ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={dashboardIcon} alt="" />
+                            </NavLink>
+
+                        </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Earnings" placement='right'>
+                                <NavLink to='/earnings' className={window.location.href.includes('earnings') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={saleStatsIcon} alt="" />
+                                </NavLink>
+
+                            </MDBTooltip>
+
+                        </>
+
+
+                    }
+
+                    {
+                        userDetail && userDetail.role === "product" && <><MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Dashboard" placement='right'>
+                            <NavLink to='/' className={window.location.pathname === '/' ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={dashboardIcon} alt="" />
+                            </NavLink>
+
+                        </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Earnings" placement='right'>
+                                <NavLink to='/earnings' className={window.location.href.includes('earnings') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={saleStatsIcon} alt="" />
+                                </NavLink>
+
+                            </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Products" placement='right'>
+                                <NavLink to='/products' className={window.location.href.includes('products') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={productIcon} alt="" style={{ height: '20px' }} />
+                                </NavLink>
+
+                            </MDBTooltip>
+
+                        </>
+
+
+                    }
+
+                    {
+                        userDetail && userDetail.role === "pdf" && <><MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Dashboard" placement='right'>
+                            <NavLink to='/' className={window.location.pathname === '/' ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={dashboardIcon} alt="" />
+                            </NavLink>
+
+                        </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="PDF History" placement='right'>
+                                <NavLink to='/pdf/history' className={window.location.href.includes('pdf/history') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={historyIcon} alt="" />
+                                </NavLink>
+
+                            </MDBTooltip>
+
+                        </>
+
+
+                    }
+
+                {
+                        userDetail && userDetail.role === "instagram" && <><MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Dashboard" placement='right'>
+                            <NavLink to='/' className={window.location.pathname === '/' ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={dashboardIcon} alt="" />
+                            </NavLink>
+
+                        </MDBTooltip>
+
+                           
+
+                        </>
+
+
+                    }
+
+{
+                        userDetail && userDetail.role === "developer" && <><MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Dashboard" placement='right'>
+                            <NavLink to='/' className={window.location.pathname === '/' ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={dashboardIcon} alt="" />
+                            </NavLink>
+
+                        </MDBTooltip>
+
+                        {/* <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Projects" placement='right'>
+                            <NavLink to='/project' className={window.location.href.includes('project') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={productIcon} alt="" style={{ height: '20px' }} />
+                            </NavLink>
+
+                        </MDBTooltip> */}
+
+                        <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Open Task" placement='right'>
+                            <NavLink to='/open-tasks' className={window.location.href.includes('/open-tasks') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                <img src={historyIcon} alt="" />
+                            </NavLink>
+
+                        </MDBTooltip>
+
+                           
+
+                        </>
+
+
+                    }
+
+
+                    {/* <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Dashboard" placement='right'>
                         <NavLink to='/' className={window.location.pathname === '/' ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
                             <img src={dashboardIcon} alt="" />
                         </NavLink>
@@ -132,7 +328,7 @@ export default function Sidebar(props) {
 
                         </MDBTooltip>
                     }
-
+ */}
 
 
 

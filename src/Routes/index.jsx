@@ -14,12 +14,15 @@ import PDFDashboard from "../Pages/PDFDashboard/PDFDashboard";
 import Instagram from "../Pages/Instagram/Instagram";
 import PostHistory from "../Pages/PostHistory/PostHistory";
 import Payment from "../Pages/Payment/Payment";
-import Project from  '../Pages/Project/Project'
+import Project from '../Pages/Project/Project'
 import ProjectDetail from "../Pages/ProjectDetail/ProjectDetail";
 import OpenTask from "../Pages/OpenTasks/OpenTask";
-import LoginC from "../Pages/Login copy/Login"  ;
+// import Login from '../Pages/InstagramLogin/Login'
+import ForgotPassword from '../Pages/ForgotPassword/ForgotPassword'
+import ResetPassword from "../Pages/ResetPassword/ResetPassword";
+
 const Routes = () => {
-  const { token,userDetail } = useAuth();
+  const { token, userDetail } = useAuth();
 
   // Define public routes accessible to all users
   // const routesForPublic = [
@@ -43,46 +46,117 @@ const Routes = () => {
   //         path: "/",
   //         element: <Dashboard/>,
   //       },
-        
+
   //     ],
   //   },
   // ];
-  const routesForSubscriptionAndAdminOnly = [
+
+
+  const routesForAdminOnly = [
     {
       path: "/",
       element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
       children: [
         {
           path: "/",
-          element: <Dashboard/>,
+          element: <Dashboard />,
         },
         {
           path: "/earnings/:user_id?",
-          element: <Earning/>,
+          element: <Earning />,
         },
-        
-        
+        {
+          path: "/users/",
+          element: <Users />,
+        },
+        {
+          path: "/users/:user_id?",
+          element: <ClientDetail />,
+        },
+        {
+          path: "/payment/",
+          element: <Payment />,
+        },
+        {
+          path: "/project/",
+          element: <Project />,
+        },
+        {
+          path: "/projects/detail/:project_id",
+          element: <ProjectDetail />,
+        },
+        {
+          path: "/open-tasks",
+          element: <OpenTask />,
+        },
       ],
     },
   ];
 
-  const routesForProductAndAdminOnly = [
+  const routesForVAOnly = [
+    {
+      path: "/",
+      element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
+      children: [
+        // {
+        //   path: "/",
+        //   element: <Dashboard />,
+        // },
+        {
+          path: "/",
+          element: <Users />,
+        },
+        {
+          path: "/earnings/:user_id?",
+          element: <Earning />,
+        },
+        
+        {
+          path: "/users/:user_id?",
+          element: <ClientDetail />,
+        },
+        // {
+        //   path: "/payment/",
+        //   element: <Payment />,
+        // },
+        {
+          path: "/project/",
+          element: <Project />,
+        },
+        {
+          path: "/projects/detail/:project_id",
+          element: <ProjectDetail />,
+        },
+        {
+          path: "/open-tasks",
+          element: <OpenTask />,
+        },
+      ],
+    },
+  ];
+
+
+  const routesForSubscriptionOnly = [
     {
       path: "/",
       element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
       children: [
         {
           path: "/",
-          element: <Dashboard/>,
+          element: <Dashboard />,
         },
         {
           path: "/earnings/:user_id?",
-          element: <Earning/>,
+          element: <Earning />,
         },
         
+
+
       ],
     },
   ];
+
+
 
 
   const routesForProductOnly = [
@@ -90,19 +164,26 @@ const Routes = () => {
       path: "/",
       element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
       children: [
-        
+        {
+          path: "/",
+          element: <Dashboard />,
+        },
+        {
+          path: "/earnings/:user_id?",
+          element: <Earning />,
+        },
         {
           path: "/products/:user_id?",
-          element: <Product/>,
+          element: <Product />,
         },
         {
           path: "/products/upload-csv?",
-          element: <ProductCSV/>,
+          element: <ProductCSV />,
         },
-        
-        
-        
-       
+
+
+
+
       ],
     },
   ];
@@ -112,123 +193,100 @@ const Routes = () => {
       path: "/",
       element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
       children: [
-        
+
         {
           path: "/",
-          element: <PDFDashboard/>,
+          element: <PDFDashboard />,
         },
         {
-          path:'/pdf/history',
-          element : <PDFHistory/>
+          path: '/pdf/history:user_id?',
+          element: <PDFHistory />
         }
-        
-       
+
+
       ],
     },
   ];
 
-  const routesForPDFandAdminOnly = [
-    {
-      
-      element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
-      children: [
-        
-       
-        {
-          path:'/pdf/history/:user_id?',
-          element : <PDFHistory/>
-        }
-        
-       
-      ],
-    },
-  ];
+  // const routesForPDFandAdminOnly = [
+  //   {
 
-  const routesForAdminOnly = [
-    {
-      path: "/",
-      element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
-      children: [
-        {
-          path: "/users/",
-          element: <Users/>,
-        },
-        {
-          path: "/users/:user_id?",
-          element: <ClientDetail/>,
-        },
-        {
-          path: "/payment/",
-          element: <Payment/>,
-        },
-        {
-          path: "/project/",
-          element: <Project/>,
-        },
-      ],
-    },
-  ];
+  //     element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
+  //     children: [
+
+
+  //       {
+  //         path:'/pdf/history/:user_id?',
+  //         element : <PDFHistory/>
+  //       }
+
+
+  //     ],
+  //   },
+  // ];
+
+
 
   const routesForInstagramOnly = [
     {
       path: "/",
       element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
       children: [
-        
+
         {
           path: "/",
-          element: <Instagram/>,
+          element: <Instagram />,
         },
-       
-        
-       
+
+
+
       ],
     },
   ];
 
-  const routesForInstagramandAdminOnly = [
-    {
-      
-      element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
-      children: [
-        
-       
-        {
-          path:'/instagram/history/:user_id?',
-          element : <PostHistory/>
-        }
-        
-       
-      ],
-    },
-  ];
+  // const routesForInstagramandAdminOnly = [
+  //   {
+
+  //     element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
+  //     children: [
 
 
-  const routesForDeveloperAndVAAndAdmin =[
+  //       {
+  //         path: '/instagram/history/:user_id?',
+  //         element: <PostHistory />
+  //       }
+
+
+  //     ],
+  //   },
+  // ];
+
+
+  const routesForDeveloper = [
     {
       path: "/",
       element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
       children: [
-        
+
         {
           path: "/",
-          element: <Project/>,
+          element: <Project />,
         },
 
         {
           path: "/projects/detail/:project_id",
-          element: <ProjectDetail/>,
+          element: <ProjectDetail />,
         },
         {
           path: "/open-tasks",
-          element: <OpenTask/>,
+          element: <OpenTask />,
         },
-        
-       
+
+
       ],
     },
   ];
-  
+
 
   // Define routes accessible only to non-authenticated users
   const routesForNotAuthenticatedOnly = [
@@ -236,28 +294,38 @@ const Routes = () => {
       path: "/",
       element: <Login />
     },
+
     {
-      path: "/c",
-      element: <LoginC />
+      path: "/forgot-password",
+      element: <ForgotPassword />
     },
-   
+
+    {
+      path: "/reset-password/:uid/:token",
+      element: <ResetPassword />
+    },
+
+
   ];
 
 
- 
   const router = createBrowserRouter([
     // ...routesForPublic,
     ...((!token || !userDetail) ? routesForNotAuthenticatedOnly : []),
+    ...(token && userDetail && userDetail['role'] == 'admin' ? routesForAdminOnly : []),
+    ...(token && userDetail && userDetail['role'] == 'VA' ? routesForVAOnly : []),
+    ...(token && userDetail && (userDetail['role'] === 'subscription') ? routesForSubscriptionOnly : []),
+    ...(token && userDetail && ( userDetail['role'] === 'developer') ? routesForDeveloper : []),
+    ...(token && userDetail && userDetail['role'] === 'product' ? routesForProductOnly : []),
+    ...(token && userDetail && userDetail['role'] === 'pdf' ? routesForPDFOnly : []),
+    ...(token && userDetail && userDetail['role'] === 'instagram' ? routesForInstagramOnly : []),
     // ...(token? routesForAllAuth:[]),
-    ...(token && userDetail &&(userDetail['role'] === 'admin' || userDetail['role']==='subscription')?routesForSubscriptionAndAdminOnly:[]),
-    ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'product')? routesForProductAndAdminOnly:[]),
-    ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'pdf')? routesForPDFandAdminOnly:[]),
-    ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'instagram')? routesForInstagramandAdminOnly:[]),
-    ...(token && userDetail &&(userDetail['role'] === 'admin' || userDetail['role']==='developer')?routesForDeveloperAndVAAndAdmin:[]),
-    ...(token && userDetail &&  userDetail['role'] === 'product'? routesForProductOnly:[]),
-    ...(token && userDetail &&  userDetail['role'] === 'pdf'? routesForPDFOnly:[]),
-    ...(token && userDetail &&  userDetail['role'] === 'instagram'? routesForInstagramOnly:[]),
-    ...(token && userDetail && userDetail['role']=='admin' ? routesForAdminOnly : []),
+    
+    // ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'product')? routesForProductAndAdminOnly:[]),
+    // ...(token && userDetail && (userDetail['role']==='admin' || userDetail['role'] === 'pdf')? routesForPDFandAdminOnly:[]),
+    // ...(token && userDetail && (userDetail['role'] === 'admin' || userDetail['role'] === 'instagram') ? routesForInstagramandAdminOnly : []),
+    
+    
   ]);
 
   // Provide the router configuration using RouterProvider

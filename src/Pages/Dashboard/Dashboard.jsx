@@ -43,7 +43,7 @@ export default function Dashbaord() {
 
             </div>
             {
-              userDetail && userDetail['role'] === 'admin' && <div className='col-sm-2'>
+              userDetail && (userDetail['role'] === "admin" || userDetail['role'] === "VA") && <div className='col-sm-2'>
                 <select name="dashboard_type" className='h-100 w-100' style={{ backgroundColor: 'white', border: '1px solid #e4e5e7', borderRadius: '2px' }} onChange={setDashboard}>
 
                   <option value="subscription_dashboard" >Subscription Dashboard</option>
@@ -57,11 +57,11 @@ export default function Dashbaord() {
 
           </div>
 
-          {userDetail && userDetail['role'] === "admin" && dashboardType === 'subscription_dashboard' &&
+          {userDetail && (userDetail['role'] === "admin" || userDetail['role'] === "VA") && dashboardType === 'subscription_dashboard' &&
             <SubscriptionDashboard setLoader={setLoader} dates={dates} />
           }
 
-          {userDetail && userDetail['role'] === "admin" && dashboardType === 'product_dashboard' &&
+          {userDetail && (userDetail['role'] === "admin" || userDetail['role'] === "VA") && dashboardType === 'product_dashboard' &&
             <ProductDashbaord setLoader={setLoader} dates={dates} />
           }
 
