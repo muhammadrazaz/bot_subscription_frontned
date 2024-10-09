@@ -97,7 +97,7 @@ export default function ProductDashboard(props) {
 
                 <div className=" p-3 top-card">
                   <div>
-                    {dashboardData.total_users && <span>
+                    {dashboardData.total_users > -1 && <span>
                       <p className='mb-1 font-1 macan-bold'><Link to="/users/" style={{ color: 'black' }}>{dashboardData['total_users']}</Link></p>
                       <p className='mb-1 font-2 macan-semibold'>Total Users</p>
                     </span>}

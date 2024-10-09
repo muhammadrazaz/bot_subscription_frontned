@@ -62,7 +62,7 @@ const Routes = () => {
           element: <Dashboard />,
         },
         {
-          path: "/earnings/:user_id?",
+          path: "/earnings/:bot_id?",
           element: <Earning />,
         },
         {
@@ -70,7 +70,11 @@ const Routes = () => {
           element: <Users />,
         },
         {
-          path: "/users/:user_id?",
+          path: "/products/:bot_id?",
+          element: <Product />,
+        },
+        {
+          path: "/users/:bot_id?",
           element: <ClientDetail />,
         },
         {
@@ -107,12 +111,12 @@ const Routes = () => {
           element: <Users />,
         },
         {
-          path: "/earnings/:user_id?",
+          path: "/earnings/:bot_id?",
           element: <Earning />,
         },
         
         {
-          path: "/users/:user_id?",
+          path: "/users/:bot_id?",
           element: <ClientDetail />,
         },
         // {
@@ -146,7 +150,7 @@ const Routes = () => {
           element: <Dashboard />,
         },
         {
-          path: "/earnings/:user_id?",
+          path: "/earnings/:bot_id?",
           element: <Earning />,
         },
         
@@ -169,11 +173,11 @@ const Routes = () => {
           element: <Dashboard />,
         },
         {
-          path: "/earnings/:user_id?",
+          path: "/earnings/:bot_id?",
           element: <Earning />,
         },
         {
-          path: "/products/:user_id?",
+          path: "/products/:bot_id?",
           element: <Product />,
         },
         {

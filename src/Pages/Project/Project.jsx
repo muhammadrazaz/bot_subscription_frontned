@@ -7,7 +7,9 @@ import CustomDatePicker from '../../Components/CustomDatePicker/CustomDatePicker
 import axios from '../../Api/axios'
 import { Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../Provider/AuthProvider'
 export default function Project() {
+  const {userDetail} = useAuth()
   const [loader, setLoader] = useState(false)
   const [dates, setDates] = useState([subDays(new Date(), 30), new Date()])
   const [isAdd, setIsAdd] = useState()
@@ -30,10 +32,11 @@ export default function Project() {
         field: 'total_tasks',
 
       },
-      {
+      ...(userDetail['role'] !== 'VA'?[{
         label: 'Total Cost',
         field: 'total_cost'
-      },
+      },]:[]),
+      
       {
         label: 'Total Developer',
         field: 'total_developers',

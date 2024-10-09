@@ -12,7 +12,7 @@ import Loader from '../../Components/Loader/Loader'
 import { useAuth } from '../../Provider/AuthProvider'
 
 export default function Earning() {
-  const { user_id } = useParams(); // Get the route parameter
+  const { bot_id } = useParams(); // Get the route parameter
   const [dates, setDates] = useState([subDays(new Date(), 30), new Date()])
   const [earningType,setEarningType] = useState("subscription")
   const [loader,setLoader] = useState(false)
@@ -25,11 +25,12 @@ export default function Earning() {
         field: 'plan',
 
       },
-      {
+      ...(userDetail['role'] !== 'VA'? [{
         label: 'Price',
         field: 'price',
 
-      },
+      }]:[]),
+     
       {
         label: 'User ID',
         field: 'user_id'
@@ -133,11 +134,13 @@ export default function Earning() {
         field: 'item_quantity',
 
       },
-      {
+      ...(userDetail['role'] !== 'VA'?[{
         label: 'Order Total',
         field: 'order_total',
 
-      },
+      }] :
+      []),
+      
       {
         label: 'Mail Service',
         field: 'mail_service',
@@ -171,10 +174,10 @@ export default function Earning() {
 
 
   useEffect(()=>{
-    if(user_id){
+    if(bot_id){
       axios.get('user/role',{
         params: {
-          user_id:user_id
+          bot_id:bot_id
         }
       }).then(response=>{
         setEarningType(response.data.role)
@@ -221,7 +224,7 @@ export default function Earning() {
     axios.get('/subscriptions/',{
       params: {
         dates: dates,
-        user_id:user_id
+        bot_id:bot_id
       }
     })
     .then(response =>{
@@ -241,7 +244,7 @@ export default function Earning() {
     axios.get('/orders/',{
       params: {
         dates: dates,
-        user_id:user_id
+        bot_id:bot_id
       }
     })
     .then(response =>{
@@ -265,8 +268,9 @@ export default function Earning() {
               <CustomDatePicker dates={dates} setDates={setDates} />
         </div>
         <div className="col-md-6 my-1">
+          {console.log(bot_id,'========================')}
         {
-              userDetail['role'] === 'admin' && !user_id && <select name="earning_type" className='h-100 py-md-2' style={{backgroundColor:'white',border:'1px solid #e4e5e7',borderRadius:'2px',width:'200px'}} onChange={setEarning}>
+              (userDetail['role'] === 'admin' || userDetail['role'] === 'VA') && !bot_id && <select name="earning_type" className='h-100 py-md-2' style={{backgroundColor:'white',border:'1px solid #e4e5e7',borderRadius:'2px',width:'200px'}} onChange={setEarning}>
                 
                 <option value="subscription" >Subscription Earning</option>
                 <option value="product">Product Earning</option>

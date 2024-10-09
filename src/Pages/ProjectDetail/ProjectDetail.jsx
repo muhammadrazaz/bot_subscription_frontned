@@ -43,7 +43,7 @@ export default function ProjectDetail() {
                 field: 'task_timeline',
 
             },
-            ...(userDetail &&( userDetail.role === 'admin' || userDetail.role === 'developer')  ? [{
+            ...(userDetail['role'] !== 'VA' ? [{
                 label: 'Task Cost',
                 field: 'task_cost',
 
@@ -258,7 +258,7 @@ export default function ProjectDetail() {
 
 
                             <div className="w-100 p-2">
-                                <label htmlFor="" className='font-2 macan-semibold mb-2'>Task Detail Video</label>
+                                <label htmlFor="" className='font-2 macan-regular mb-2'>Task Detail Video</label>
                                 <input type="file" name="task_detail_video" onChange={handleTaskChange} className={'form-control input-field m-0 ' + (errors.task_detail_video ? 'is-invalid' : '')} />
                                 <div class="invalid-feedback">
                                     {errors.task_detail_video}
@@ -266,7 +266,7 @@ export default function ProjectDetail() {
                             </div>
 
                             <div className="w-100 p-2">
-                                <label htmlFor="" className='font-2 macan-semibold mb-2'>Requirement Document</label>
+                                <label htmlFor="" className='font-2 macan-regular mb-2'>Requirement Document</label>
                                 <input type="file" name="requirement_document" placeholder="Requirement Document" onChange={handleTaskChange} className={'form-control input-field m-0 ' + (errors.requirement_document ? 'is-invalid' : '')} />
                                 <div class="invalid-feedback">
                                     {errors.requirement_document}
@@ -280,15 +280,17 @@ export default function ProjectDetail() {
                                 </div>
                             </div>
 
-                            <div className="w-100 p-2">
+                            {userDetail['role'] !== "VA" && <div className="w-100 p-2">
                                 <input type="number" name="task_cost" placeholder="Task Cost" value={taskData['task_cost']} onChange={handleTaskChange} className={'form-control input-field m-0 ' + (errors.task_cost ? 'is-invalid' : '')} />
                                 <div class="invalid-feedback">
                                     {errors.task_cost}
                                 </div>
-                            </div>
+                            </div>}
+
+                            
 
                             <div className="w-100 p-2">
-                                <label htmlFor="" className='font-2 macan-semibold mb-2'>Instruction Video</label>
+                                <label htmlFor="" className='font-2 macan-regular mb-2'>Instruction Video</label>
                                 <input type="file" name="instruction_video" placeholder="Instruction Video" onChange={handleTaskChange} className={'form-control input-field m-0 ' + (errors.instruction_video ? 'is-invalid' : '')} />
                                 <div class="invalid-feedback">
                                     {errors.instruction_video}
@@ -296,7 +298,7 @@ export default function ProjectDetail() {
                             </div>
 
                             <div className="w-100 p-2">
-                                <label htmlFor="" className='font-2 macan-semibold mb-2'>Code Explanation Video</label>
+                                <label htmlFor="" className='font-2 macan-regular mb-2'>Code Explanation Video</label>
                                 <input type="file" name="code_explanation_video" placeholder="Code Explanation Video" onChange={handleTaskChange} className={'form-control input-field m-0 ' + (errors.code_explanation_video ? 'is-invalid' : '')} />
                                 <div class="invalid-feedback">
                                     {errors.code_explanation_video}
@@ -304,7 +306,7 @@ export default function ProjectDetail() {
                             </div>
 
                             <div className="w-100 p-2">
-                                <label htmlFor="" className='font-2 macan-semibold mb-2'>Latest Filed</label>
+                                <label htmlFor="" className='font-2 macan-regular mb-2'>Latest Filed</label>
                                 <input type="file" name="latest_files" placeholder="Latest Filed" onChange={handleTaskChange} className={'form-control input-field m-0 ' + (errors.latest_files ? 'is-invalid' : '')} />
                                 <div class="invalid-feedback">
                                     {errors.latest_files}

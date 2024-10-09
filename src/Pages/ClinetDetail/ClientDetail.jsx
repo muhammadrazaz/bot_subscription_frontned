@@ -9,7 +9,7 @@ import { Modal } from "react-bootstrap";
 import Loader from '../../Components/Loader/Loader'
 
 export default function ClientDetail() {
-  const { user_id } = useParams()
+  const { bot_id } = useParams()
   const [isEdit, setIsEdit] = useState(false)
   const [userProfile,setUserProfile] = useState()
   const [errors,setErrors] = useState({})
@@ -103,7 +103,7 @@ export default function ClientDetail() {
     await axios.get("/client-detail/",{
       params: {
      
-        user_id:user_id
+        bot_id:bot_id
       }
     })
       .then(response => {

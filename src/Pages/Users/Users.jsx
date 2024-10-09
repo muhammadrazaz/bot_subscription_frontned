@@ -55,6 +55,18 @@ export default function Users() {
       ...prevState,
       columns: [
         {
+          label: 'First Name',
+          field: 'first_name',
+        },
+        {
+          label: 'Last Name',
+          field: 'last_name',
+        },
+        {
+          label: 'Email',
+          field: 'email',
+        },
+        {
           label: 'Web Username',
           field: 'web_username',
         },
@@ -62,10 +74,13 @@ export default function Users() {
           label: 'Web Password',
           field: 'web_password',
         },
-        ...(type === 'subscription' || type === 'product' ? [{
+        ...((type === 'subscription' || type === 'product') && userDetail['role'] !== "VA" ? [{
           label: 'Total Earnings',
           field: 'total_earnings',
         },
+       ] : []),
+
+        ...(type === 'subscription' || type === 'product' ? [
         {
           label: 'Total Users',
           field: 'total_users',
@@ -214,7 +229,7 @@ export default function Users() {
         <div className="col-md-4 my-2" style={{ textAlign: 'end' }}>
           
             {
-              userDetail['role'] === 'admin' && <select name="type" className='h-100 w-100 py-2' style={{backgroundColor:'white',border:'1px solid #e4e5e7',borderRadius:'2px'}} onChange={handleChangeType}>
+              (userDetail['role'] === 'admin' || userDetail['role'] === 'VA') && <select name="type" className='h-100 w-100 py-2' style={{backgroundColor:'white',border:'1px solid #e4e5e7',borderRadius:'2px'}} onChange={handleChangeType}>
                 
                 <option value="subscription" >Subscription Users</option>
                 <option value="product">Product Users</option>

@@ -72,6 +72,13 @@ export default function Sidebar(props) {
 
                             </MDBTooltip>
 
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Products" placement='right'>
+                                <NavLink to='/products' className={window.location.href.includes('products') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={productIcon} alt="" style={{ height: '20px' }} />
+                                </NavLink>
+
+                            </MDBTooltip>
+
                             <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Projects" placement='right'>
                                 <NavLink to='/project' className={window.location.href.includes('project') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
                                     <img src={productIcon} alt="" style={{ height: '20px' }} />

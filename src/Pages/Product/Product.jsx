@@ -9,7 +9,7 @@ import { Modal } from "react-bootstrap";
 import Loader from '../../Components/Loader/Loader'
 import { Link } from 'react-router-dom'
 export default function Product() {
-    const { user_id } = useParams()
+    const { bot_id } = useParams()
     const [isEdit, setIsEdit] = useState(false)
     const [isAdd, setIsAdd] = useState(false)
     const [productData, setProductData] = useState({})
@@ -264,7 +264,7 @@ export default function Product() {
         await axios.get("/products/", {
             params: {
 
-                user_id: user_id
+                bot_id: bot_id
             }
         })
             .then(response => {
