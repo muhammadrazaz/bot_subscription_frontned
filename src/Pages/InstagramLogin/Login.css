@@ -20,8 +20,12 @@
     width: 100% !important;
 }
 
-.instagram form div{
+.instagram form  > div {
     width: 100% !important;
+}
+
+.instagram .form-control {
+    padding-left: 0;
 }
 
 .instagram form input:focus{

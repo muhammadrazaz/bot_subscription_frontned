@@ -1,17 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { act, useEffect, useRef, useState } from 'react'
 // import BasePage from '../BasePage/BasePage'
 // import UploadFile from '../../Components/UploadFile/UploadFile'
 // import axios from 'axios';
 import addIcon from '../../Assets/add.png'
-import postIcon from  '../../Assets/post-icon.png'
+import dashboardIcon from  '../../Assets/dashboard.png'
+import postIcon from '../../Assets/post-icon.png'
 import logoutIcon from '../../Assets/logout.png'
+import delete_icon from '../../Assets/delete.png'
+import edit_icon from '../../Assets/edit.png'
 import axios from '../../Api/axios'
 import { Modal } from "react-bootstrap";
 import './Instagram.css'
 import InstagramLoader from '../../Components/InstagramLoader/InstagramLoader';
 import { useAuth } from '../../Provider/AuthProvider';
 export default function Instagram() {
-    const { token,setToken, setUserDetail } = useAuth()
+    const { token, setToken, setUserDetail } = useAuth()
     const [fileSelected, setFileSelected] = useState();
     const [loader, setLoader] = useState(true)
     const [errors, setErrors] = useState({})
@@ -32,6 +35,15 @@ export default function Instagram() {
     const [captionPrompt, setCaptionPrompt] = useState('')
     const [connectText, setConnectText] = useState('Connect Instagram')
 
+    const [postWaitListData, setPostWaitListData] = useState([])
+    const [isPostWaitList, setIsPostWaitList] = useState(false)
+
+    const [editData,setEditData] = useState({})
+
+
+    // useEffect(()=>{
+    //     console.log(isPostWaitList)
+    // },[isPostWaitList])
 
 
     const url = axios.defaults.baseURL
@@ -42,6 +54,8 @@ export default function Instagram() {
 
 
     useEffect(() => {
+
+
 
         socketRef.current = new WebSocket(wsUrl);
         // 
@@ -95,7 +109,7 @@ export default function Instagram() {
 
 
 
-    const logout = () =>{
+    const logout = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('user')
         setUserDetail()
@@ -133,10 +147,15 @@ export default function Instagram() {
     }
 
 
-    useEffect(() => {
-        getUsernameAndPropmt()
+    useEffect(()  => {
+        getData()
         // getIP()
     }, [])
+
+    const getData = async () =>{
+        await getUsernameAndPropmt()
+        await getWaitListApi()
+    }
 
     useEffect(() => {
         if (!connectData.city_name) {
@@ -200,7 +219,7 @@ export default function Instagram() {
         });
     };
 
-    const newPost = (e) =>{
+    const newPost = (e) => {
         setGeneratedCaptions([])
         setFileSelected()
     }
@@ -208,6 +227,8 @@ export default function Instagram() {
     const connectClick = () => {
         if (connectText == 'Connect Instagram') {
             setIsInstagramConnect(true)
+            setIsSetUpCaptionPrompt(false)
+            setIsPostWaitList(false)
         }
         else {
             axios.get('/disconnect-instagram')
@@ -220,6 +241,20 @@ export default function Instagram() {
         }
     }
 
+    const editClick = (data) =>{
+        console.log(data)
+        setEditData(data);
+    }
+
+    const handleEditChange = (e) =>{
+        // console.log('===================',e)
+        const {name,value} = e.target
+        setEditData(prevState =>({
+            ...prevState,
+            [name] :value
+        }))
+    }
+
     const focusTextarea = (e) => {
         const value = e.target.value
         const textarea = document.getElementById(value);
@@ -228,9 +263,9 @@ export default function Instagram() {
     }
 
 
-    const getUsernameAndPropmt = () => {
+    const getUsernameAndPropmt = async () => {
         setLoader(true)
-        axios.get("connect-instagram/")
+        await axios.get("connect-instagram/")
             .then(response => {
                 console.log(response)
 
@@ -244,6 +279,7 @@ export default function Instagram() {
                 setIsPrompt(response.data.prompt)
                 setCaptionPrompt(response.data.prompt)
                 setLoader(false)
+                // getWaitListApi()
             }).catch(error => {
 
                 console.log(error)
@@ -330,52 +366,164 @@ export default function Instagram() {
 
     const postApi = async (e) => {
         e.preventDefault()
-
+        setLoader(true)
         const form = e.target;
         const caption = form.elements.caption.value;
 
+        const action = e.nativeEvent.submitter.value;
+        
+        
+
+        if (action === 'post') {
+
+            const formData = new FormData();
+            formData.append('file', fileSelected);
+            formData.append('caption', caption || '')
+
+
+            await axios.post("post-on-instagram/", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(response => {
+                console.log(response)
+                setErrors({})
+
+
+                setFileSelected()
+                setGeneratedCaptions([])
+                setLoader(false)
+                // alert(response.data.message)
+                setOtherLoader(true)
+                setOtherText('POSTED!')
+                setTimeout(() => {
+                    setOtherText('')
+                    setOtherLoader(false)
+                }, [2000])
+            }).catch(error => {
+                console.log(error)
+                if (error.response.status === 400) {
+                    setErrors(error.response.data)
+                }
+                setLoader(false)
+            })
+        }
+        else {
+
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            const form = e.target;
+            const caption = form.elements.caption.value;
+
+            setLoader(true)
+
+            const formData = new FormData();
+            formData.append('file', fileSelected);
+            formData.append('caption', caption || '')
+            formData.append('time_zone', timezone)
+
+
+            await axios.post("instagram/post-wait-list/", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(response => {
+                console.log(response)
+                setErrors({})
+
+
+                setFileSelected()
+                setGeneratedCaptions([])
+                setLoader(false)
+                // alert(response.data.message)
+                // setOtherLoader(true)
+                // setOtherText('POSTED!')
+                // setTimeout(() => {
+                //     setOtherText('')
+                //     setOtherLoader(false)
+                // }, [2000])
+                getWaitListApi()
+                setIsPostWaitList(true)
+            }).catch(error => {
+                console.log(error)
+                if (error.response.status === 400) {
+                    setErrors(error.response.data)
+                }
+                setLoader(false)
+            })
+
+        }
+    }
+
+    const getWaitListApi =async () => {
+
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const now = new Date();
+
+        setLoader(true)
+        await axios.get('/instagram/post-wait-list/', {
+            params: {
+                timezone,
+                date_time: now
+            }
+        })
+            .then(response => {
+                console.log(response)
+                setPostWaitListData(response.data.data)
+                setLoader(false)
+            }).catch(error => {
+                console.log(error)
+                setLoader(false)
+            })
+    }
+
+
+    const deleteWaitListApi  = (id) =>{
+        // console.log(id)
         setLoader(true)
 
-        const formData = new FormData();
-        formData.append('file', fileSelected);
-        formData.append('caption', caption || '')
-
-
-        await axios.post("post-on-instagram/", formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(response => {
+        axios.delete('/instagram/update-wait-post/'+id)
+        .then(response =>{
             console.log(response)
-            setErrors({})
-
-
-            setFileSelected()
-            setGeneratedCaptions([])
             setLoader(false)
-            // alert(response.data.message)
-            setOtherLoader(true)
-            setOtherText('POSTED!')
-            setTimeout(() => {
-                setOtherText('')
-                setOtherLoader(false)
-            }, [2000])
-        }).catch(error => {
+            getWaitListApi()
+        }).catch(error =>{
             console.log(error)
-            if (error.response.status === 400) {
-                setErrors(error.response.data)
-            }
             setLoader(false)
         })
     }
+
+
+    const editWaitPostApi = (e) =>{
+        
+        // e.preventDefault()
+        setLoader(true)
+        axios.put('/instagram/update-wait-post/'+editData.id,{
+            caption : editData.caption
+        })
+        .then(response =>{
+            console.log(response)
+            setEditData({})
+            setLoader(false)
+            getWaitListApi()
+        }).catch(error =>{
+            console.log(error)
+            setLoader(false)
+        })
+    }
+
+
+
+
     return (
         <div className='p-4 instagram'>
 
             <div className='insta-button d-flex w-100 justify-content-between'>
                 <div>
-                {generatedCaptions.length !== 0 && <button className='logout-btn p-1  ' onClick={newPost}><img src={postIcon} alt="" /></button>}
-                <button className={' py-2 px-3 top-btn ms-md-4 my-1' + (isInstagramConnect ? 'active-border' : '')} onClick={connectClick} onMouseEnter={connectButtonHover} onMouseLeave={connectButtonLeave}>{connectText}</button>
-                <button className={' py-2 px-3 top-btn ms-md-4 my-1' + (isSetUpCaptionPrompt ? 'active-border' : '')} onClick={() => { setIsInstagramConnect(false); setIsSetUpCaptionPrompt(!isSetUpCaptionPrompt) }}>Set-up Caption Prompt{isPrompt ? ' √' : ''}</button>
+                    {generatedCaptions.length !== 0 && <button className='logout-btn me-md-4' onClick={newPost}><img src={postIcon} alt="" /></button>}
+                    <button className={' py-2 px-3 top-btn  my-1' + (isInstagramConnect ? 'active-border' : '')} onClick={connectClick} onMouseEnter={connectButtonHover} onMouseLeave={connectButtonLeave}>{connectText}</button>
+                    <button className={' py-2 px-3 top-btn ms-md-4 my-1' + (isSetUpCaptionPrompt ? 'active-border' : '')} onClick={() => { setIsInstagramConnect(false); setIsSetUpCaptionPrompt(!isSetUpCaptionPrompt) }}>Set-up Caption Prompt{isPrompt ? ' √' : ''}</button>
+                    <button className='logout-btn  ms-md-4' onClick={() => { setIsPostWaitList(!isPostWaitList, setIsInstagramConnect(false), setIsSetUpCaptionPrompt(false)) }}><img src={dashboardIcon} alt="" /></button>
                 </div>
 
                 <button className='logout-btn p-1  my-1' onClick={logout}><img src={logoutIcon} alt="" /></button>
@@ -397,7 +545,7 @@ export default function Instagram() {
 
             {
                 !loader && !otherLoader &&
-                <div className='d-flex  align-items-center justify-content-center'  style={{minHeight:'80vh'}}>
+                <div className='d-flex  align-items-center justify-content-center' style={{ minHeight: '80vh' }}>
 
                     {isInstagramConnect && <form className='m-3' onSubmit={connectAPI}>
                         <div class="">
@@ -428,7 +576,7 @@ export default function Instagram() {
 
 
 
-                    {!isInstagramConnect && isSetUpCaptionPrompt && <form className='m-3 p-4' onSubmit={setCaptionPromptAPI}>
+                    {isSetUpCaptionPrompt && <form className='m-3 p-4' onSubmit={setCaptionPromptAPI}>
                         <div className="col-12 propmt-txt">
                             <p>ChatGPT will write 3 captions of the images uploaded based on this prompt. </p>
                         </div>
@@ -449,7 +597,7 @@ export default function Instagram() {
 
                     </form>}
 
-                    {(username && !isInstagramConnect) && (isPrompt && !isSetUpCaptionPrompt) && (!generatedCaptions.length) && <form
+                    {username && captionPrompt && !isInstagramConnect && !isSetUpCaptionPrompt && !isPostWaitList && generatedCaptions.length === 0 && <form
                         className="w-50 d-flex align-items-center justify-content-center"
                         style={{ aspectRatio: '1/0.5', border: 'none' }}
                         onDrop={handleDrop}
@@ -483,7 +631,7 @@ export default function Instagram() {
                     }
 
 
-                    {generatedCaptions.length !== 0 &&
+                    {!isPostWaitList && generatedCaptions.length !== 0 &&
 
                         <div className='row mt-5 w-100'>
 
@@ -494,10 +642,17 @@ export default function Instagram() {
                                         <label className='edit-btn mb-4 edit-label' htmlFor={"radio-" + index}>Edit</label>
                                         <input name='caption-input' id={'radio-' + index} type="radio" value={"caption-" + index} className='d-none' onChange={focusTextarea} />
                                         <textarea name="caption" id={"caption-" + index} className='w-100 caption-textarea ' rows={10} style={{ resize: 'none' }} value={data} onChange={(e) => handleInputChange(e, index)} ></textarea>
-                                        <div>
-
-                                            <button className='post-btn py-2 px-5 mt-3' type='submit'>Post</button>
+                                        {/* <div> */}
+                                        <div className="row w-100">
+                                            <div className="col-6">
+                                                <button className='post-btn py-2 px-5 mt-3 w-100' type='submit' name="action" value="post">Post</button>
+                                            </div>
+                                            <div className="col-6">
+                                                <button className='post-btn py-2 px-5 mt-3 w-100' type='submit' name="action" value="waitlist">WaitList</button>
+                                            </div>
                                         </div>
+
+                                        {/* </div> */}
                                     </form>
                                 </div>
                             })}
@@ -507,24 +662,53 @@ export default function Instagram() {
                     }
 
                     {
+                        (!isPostWaitList && !username && !isInstagramConnect && !captionPrompt && !isSetUpCaptionPrompt) && <p className='guide-text text-center'>
+                            Connect Insta and set-up prompt first
+                        </p>
+                    }
+                    {/* {
+                        (!username && !isInstagramConnect && !captionPrompt && !isSetUpCaptionPrompt) &&
+                        <p className='guide-text text-center'>
+                            Connect Insta first
+                        </p>
+                    }
+
+                    {
                         (!username && !isInstagramConnect && !captionPrompt && !isSetUpCaptionPrompt) && <p className='guide-text text-center'>
-                        Connect Insta and set-up prompt first
-                    </p>
-                        }
-                            {
-                                (!username && !isInstagramConnect && !captionPrompt && !isSetUpCaptionPrompt) && 
-                                <p className='guide-text text-center'>
-                                    Connect Insta first
-                                </p>
-                            }
-                            
-                            {
-                        (!username && !isInstagramConnect && !captionPrompt && !isSetUpCaptionPrompt) && <p className='guide-text text-center'>
-                        set-up prompt first
-                    </p>
-                        }
-                        
-                    
+                            set-up prompt first
+                        </p>
+                    } */}
+
+                    {
+                        // !loader && !otherLoader && 
+                        isPostWaitList && <div className="post-container mt-4">
+
+                            {postWaitListData.map((data, index) => {
+                                return <div className='post-item'>
+                                    {
+                                        data.img && <>
+                                            <img src={data.img} alt="" />
+                                            <div className='post-action'>
+                                                <button className='mx-2 p-1' onClick={(e) => {editClick(data)}}>
+                                                
+                                                    <img src={edit_icon} alt="" />
+                                                </button>
+                                                <button className='p-1' onClick={(e) => {deleteWaitListApi(data.id)}}>
+                                                    <img src={delete_icon} alt="" />
+                                                
+                                                </button>
+                                            </div>
+                                        </>
+                                    }
+
+                                </div>
+                            })}
+                        </div>
+                    }
+
+
+
+
 
 
                 </div>
@@ -583,6 +767,45 @@ export default function Instagram() {
 
 
                     </div >
+
+                </Modal.Body >
+
+            </Modal >
+
+
+            <Modal
+                show={Object.keys(editData).length}
+                onHide={() => {
+                    // setIsOTP(false)
+                }}
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                style={{ zIndex: '10000' }}>
+
+                <Modal.Body style={{ maxHeight: "80vh", overflow: 'auto' }}>
+
+                    {loader && <InstagramLoader text="WAIT..."/>}
+                    {
+                        !loader && <div className='p-3 h-100' >
+                    
+                        <div className="row mt-4">
+                        <textarea name="caption" className='w-100 caption-textarea ' rows={10} style={{ resize: 'none',outline:'auto' }} value={editData.caption} onChange={handleEditChange} ></textarea>
+                        </div >
+
+                        <div className="w-100 text-center mt-2">
+                            <button type='button' className='btn btn-dark pt-2 pb-2 m-0 ms-3' onClick={editWaitPostApi}>Edit     </button>
+                        </div>
+
+
+
+
+
+
+                    </div >
+                    }
+
+                    
 
                 </Modal.Body >
 

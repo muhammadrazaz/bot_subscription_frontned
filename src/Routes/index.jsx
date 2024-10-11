@@ -296,12 +296,12 @@ const Routes = () => {
   const routesForNotAuthenticatedOnly = [
     {
       path: "/",
-      element: <Login />
+      element: <InstaLogin />
     },
 
     {
-      path: "/insta-login",
-      element: <InstaLogin />
+      path: "/other-login",
+      element: <Login />
     },
 
     {

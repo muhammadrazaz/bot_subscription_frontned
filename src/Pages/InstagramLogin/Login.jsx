@@ -70,11 +70,11 @@ export default function Login() {
             </div>
           </div>
 
-          <Link to={'/forgot-password'} className='forgot-password'>Forgot Password</Link><br />
+          {/* <Link to={'/forgot-password'} className='forgot-password'>Forgot Password</Link><br /> */}
 
           <button className='my-4 text-center p-2 w-100' type='submit'>Login</button>
 
-          <Link to={'/'} className='forgot-password'>or create account</Link><br />
+          {/* <Link to={'/'} className='forgot-password'>or create account</Link><br /> */}
 
 
         </form>
