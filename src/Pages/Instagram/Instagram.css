@@ -110,7 +110,12 @@
    
         padding: 5px;
         border: 2px solid black;
+        width: fit-content;
+        height: fit-content;
      
+}
+.connectivity-btn button{
+    margin-left: 20px;
 }
 
 .post-container {
@@ -145,6 +150,18 @@
     height: 24px;
 }
 
+.time{
+    font-size: 17px;
+    font-weight: 800;
+    font-family: 'Rethink Sans';
+}
+
+.time-count{
+    font-size: 28px;
+    font-weight: 800;
+    font-family: 'Rethink Sans';
+}
+
 @media (max-width: 768px) {
     /* .insta-button{
         display: flex;
@@ -152,3 +169,37 @@
 
     } */
 }
+
+
+@media (max-width: 1200px) {
+    .post-container {
+        grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    }
+}
+
+/* For medium screens (e.g., tablets) */
+@media (max-width: 992px) {
+    .post-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    }
+}
+
+/* For small screens (e.g., mobile) */
+@media (max-width: 768px) {
+    .post-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    }
+    .connectivity-btn{
+        display: flex;
+        flex-direction: column;
+    }
+    
+}
+
+@media (max-width: 576px) {
+    /* .connectivity-btn{
+        display: flex;
+        flex-direction: column;
+    } */
+}
+

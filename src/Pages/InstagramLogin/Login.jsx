@@ -48,7 +48,7 @@ export default function Login() {
   return (
     <div className="d-flex justify-content-center align-items-center instagram">
       {
-        loader && <InstagramLoader/>
+        loader && <InstagramLoader text="Wait"/>
       }
       {
         !loader && <form className='m-3' onSubmit={LoginApi}>

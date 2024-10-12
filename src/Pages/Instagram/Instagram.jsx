@@ -3,7 +3,7 @@ import React, { act, useEffect, useRef, useState } from 'react'
 // import UploadFile from '../../Components/UploadFile/UploadFile'
 // import axios from 'axios';
 import addIcon from '../../Assets/add.png'
-import dashboardIcon from  '../../Assets/dashboard.png'
+import dashboardIcon from '../../Assets/dashboard.png'
 import postIcon from '../../Assets/post-icon.png'
 import logoutIcon from '../../Assets/logout.png'
 import delete_icon from '../../Assets/delete.png'
@@ -38,12 +38,45 @@ export default function Instagram() {
     const [postWaitListData, setPostWaitListData] = useState([])
     const [isPostWaitList, setIsPostWaitList] = useState(false)
 
-    const [editData,setEditData] = useState({})
+    const [editData, setEditData] = useState({})
+    const [postDateTime, setPostDateTime] = useState('')
 
 
-    // useEffect(()=>{
-    //     console.log(isPostWaitList)
-    // },[isPostWaitList])
+    const currentDateTime = new Date();
+
+    // Calculate the difference in milliseconds and then convert to seconds
+
+
+
+
+    const [count, setCount] = useState(0); // Initialize countdown with time difference
+
+    useEffect(() => {
+
+        if (postDateTime) {
+            const timeDifference = Math.floor((postDateTime - currentDateTime) / 1000);
+            setCount(timeDifference)
+        }
+    }, [postDateTime])
+
+    useEffect(() => {
+        if (count > 0) {
+            // Create a timer that decrements the count every second
+            const timer = setInterval(() => {
+                setCount((prevCount) => prevCount - 1);
+            }, 1000);
+
+            // Clear the timer when the component unmounts or when the count reaches zero
+            return () => clearInterval(timer);
+        }
+    }, [count]);
+
+    const formatTime = (seconds) => {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        // const secs = seconds % 60;
+        return `${hrs}:${mins} h`;
+    };
 
 
     const url = axios.defaults.baseURL
@@ -147,12 +180,12 @@ export default function Instagram() {
     }
 
 
-    useEffect(()  => {
+    useEffect(() => {
         getData()
         // getIP()
     }, [])
 
-    const getData = async () =>{
+    const getData = async () => {
         await getUsernameAndPropmt()
         await getWaitListApi()
     }
@@ -241,17 +274,17 @@ export default function Instagram() {
         }
     }
 
-    const editClick = (data) =>{
+    const editClick = (data) => {
         console.log(data)
         setEditData(data);
     }
 
-    const handleEditChange = (e) =>{
+    const handleEditChange = (e) => {
         // console.log('===================',e)
-        const {name,value} = e.target
-        setEditData(prevState =>({
+        const { name, value } = e.target
+        setEditData(prevState => ({
             ...prevState,
-            [name] :value
+            [name]: value
         }))
     }
 
@@ -371,8 +404,8 @@ export default function Instagram() {
         const caption = form.elements.caption.value;
 
         const action = e.nativeEvent.submitter.value;
-        
-        
+
+
 
         if (action === 'post') {
 
@@ -455,7 +488,7 @@ export default function Instagram() {
         }
     }
 
-    const getWaitListApi =async () => {
+    const getWaitListApi = async () => {
 
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const now = new Date();
@@ -470,6 +503,9 @@ export default function Instagram() {
             .then(response => {
                 console.log(response)
                 setPostWaitListData(response.data.data)
+                if (response.data.data && response.data.data[0].caption !== '') {
+                    setPostDateTime(new Date(response.data.data[0].date_time))
+                }
                 setLoader(false)
             }).catch(error => {
                 console.log(error)
@@ -478,52 +514,56 @@ export default function Instagram() {
     }
 
 
-    const deleteWaitListApi  = (id) =>{
+    const deleteWaitListApi = (id) => {
         // console.log(id)
         setLoader(true)
 
-        axios.delete('/instagram/update-wait-post/'+id)
-        .then(response =>{
-            console.log(response)
-            setLoader(false)
-            getWaitListApi()
-        }).catch(error =>{
-            console.log(error)
-            setLoader(false)
-        })
+        axios.delete('/instagram/update-wait-post/' + id)
+            .then(response => {
+                console.log(response)
+                setLoader(false)
+                getWaitListApi()
+            }).catch(error => {
+                console.log(error)
+                setLoader(false)
+            })
     }
 
 
-    const editWaitPostApi = (e) =>{
-        
+    const editWaitPostApi = (e) => {
+
         // e.preventDefault()
         setLoader(true)
-        axios.put('/instagram/update-wait-post/'+editData.id,{
-            caption : editData.caption
+        axios.put('/instagram/update-wait-post/' + editData.id, {
+            caption: editData.caption
         })
-        .then(response =>{
-            console.log(response)
-            setEditData({})
-            setLoader(false)
-            getWaitListApi()
-        }).catch(error =>{
-            console.log(error)
-            setLoader(false)
-        })
+            .then(response => {
+                console.log(response)
+                setEditData({})
+                setLoader(false)
+                getWaitListApi()
+            }).catch(error => {
+                console.log(error)
+                setLoader(false)
+            })
     }
 
 
 
 
     return (
-        <div className='p-4 instagram'>
+        <div className='p-5 instagram'>
 
-            <div className='insta-button d-flex w-100 justify-content-between'>
-                <div>
-                    {generatedCaptions.length !== 0 && <button className='logout-btn me-md-4' onClick={newPost}><img src={postIcon} alt="" /></button>}
+            <div className='d-flex justify-content-between'>
+                <div className=' connectivity-btn'>
+                    {generatedCaptions.length !== 0 && <button className='logout-btn ' onClick={newPost}><img src={postIcon} alt="" /></button>}
                     <button className={' py-2 px-3 top-btn  my-1' + (isInstagramConnect ? 'active-border' : '')} onClick={connectClick} onMouseEnter={connectButtonHover} onMouseLeave={connectButtonLeave}>{connectText}</button>
-                    <button className={' py-2 px-3 top-btn ms-md-4 my-1' + (isSetUpCaptionPrompt ? 'active-border' : '')} onClick={() => { setIsInstagramConnect(false); setIsSetUpCaptionPrompt(!isSetUpCaptionPrompt) }}>Set-up Caption Prompt{isPrompt ? ' √' : ''}</button>
-                    <button className='logout-btn  ms-md-4' onClick={() => { setIsPostWaitList(!isPostWaitList, setIsInstagramConnect(false), setIsSetUpCaptionPrompt(false)) }}><img src={dashboardIcon} alt="" /></button>
+                    <button className={' py-2 px-3 top-btn  my-1' + (isSetUpCaptionPrompt ? 'active-border' : '')} onClick={() => { setIsInstagramConnect(false); setIsSetUpCaptionPrompt(!isSetUpCaptionPrompt) }}>Set-up Caption Prompt{isPrompt ? ' √' : ''}</button>
+                    <button className='logout-btn   my-1' onClick={() => { setIsPostWaitList(!isPostWaitList, setIsInstagramConnect(false), setIsSetUpCaptionPrompt(false)) }}><img src={dashboardIcon} alt="" /></button>
+                    {/* <button>isInstagramConnect</button>
+                    <button>isInstagramConnect</button>
+                    <button>isInstagramConnect</button> */}
+                   
                 </div>
 
                 <button className='logout-btn p-1  my-1' onClick={logout}><img src={logoutIcon} alt="" /></button>
@@ -531,7 +571,7 @@ export default function Instagram() {
 
             {
                 loader && <div className='d-flex  align-items-center justify-content-center' style={{ height: '90vh' }}>
-                    <InstagramLoader text="WAIT" />
+                    <InstagramLoader text="WAIT..." />
                 </div>
 
             }
@@ -681,28 +721,36 @@ export default function Instagram() {
 
                     {
                         // !loader && !otherLoader && 
-                        isPostWaitList && <div className="post-container mt-4">
+                        isPostWaitList && <div className="mt-4 w-100">
+                            <div className='w-100'>
+                                <div className='time'>Posted in </div>
+                                <div className='time-count mb-2'>{formatTime(count)}</div>
+                                {/* <h1>Countdown: {formatTime(count)}</h1> */}
+                            </div>
+                            <div className='post-container'>
 
-                            {postWaitListData.map((data, index) => {
-                                return <div className='post-item'>
-                                    {
-                                        data.img && <>
-                                            <img src={data.img} alt="" />
-                                            <div className='post-action'>
-                                                <button className='mx-2 p-1' onClick={(e) => {editClick(data)}}>
-                                                
-                                                    <img src={edit_icon} alt="" />
-                                                </button>
-                                                <button className='p-1' onClick={(e) => {deleteWaitListApi(data.id)}}>
-                                                    <img src={delete_icon} alt="" />
-                                                
-                                                </button>
-                                            </div>
-                                        </>
-                                    }
 
-                                </div>
-                            })}
+                                {postWaitListData.map((data, index) => {
+                                    return <div className='post-item'>
+                                        {
+                                            data.img && <>
+                                                <img src={axios.defaults.baseURL.split('/a')[0]+data.img} alt="" />
+                                                <div className='post-action'>
+                                                    <button className='mx-2 p-1' onClick={(e) => { editClick(data) }}>
+
+                                                        <img src={edit_icon} alt="" />
+                                                    </button>
+                                                    <button className='p-1' onClick={(e) => { deleteWaitListApi(data.id) }}>
+                                                        <img src={delete_icon} alt="" />
+
+                                                    </button>
+                                                </div>
+                                            </>
+                                        }
+
+                                    </div>
+                                })}
+                            </div>
                         </div>
                     }
 
@@ -785,27 +833,27 @@ export default function Instagram() {
 
                 <Modal.Body style={{ maxHeight: "80vh", overflow: 'auto' }}>
 
-                    {loader && <InstagramLoader text="WAIT..."/>}
+                    {loader && <InstagramLoader text="WAIT..." />}
                     {
                         !loader && <div className='p-3 h-100' >
-                    
-                        <div className="row mt-4">
-                        <textarea name="caption" className='w-100 caption-textarea ' rows={10} style={{ resize: 'none',outline:'auto' }} value={editData.caption} onChange={handleEditChange} ></textarea>
+
+                            <div className="row mt-4">
+                                <textarea name="caption" className='w-100 caption-textarea ' rows={10} style={{ resize: 'none', outline: 'auto' }} value={editData.caption} onChange={handleEditChange} ></textarea>
+                            </div >
+
+                            <div className="w-100 text-center mt-2">
+                                <button type='button' className='btn btn-dark pt-2 pb-2 m-0 ms-3' onClick={editWaitPostApi}>Edit     </button>
+                            </div>
+
+
+
+
+
+
                         </div >
-
-                        <div className="w-100 text-center mt-2">
-                            <button type='button' className='btn btn-dark pt-2 pb-2 m-0 ms-3' onClick={editWaitPostApi}>Edit     </button>
-                        </div>
-
-
-
-
-
-
-                    </div >
                     }
 
-                    
+
 
                 </Modal.Body >
 
