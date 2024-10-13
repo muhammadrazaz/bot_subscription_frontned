@@ -1,7 +1,7 @@
 .instagram-loader{
     font-size: 100px;
-    font-family: 'Rethink Sans Bold';
-    font-optical-sizing: auto;
+    font-family: 'Rethink Sans';
+    /* font-optical-sizing: auto; */
     font-weight: 800px;
     color: #303030;
 }
