@@ -135,7 +135,7 @@
     position: relative;
 }
 
-.post-item img{
+.post-item .post img{
     width: 100%;
     height: 100%;
 }
@@ -146,8 +146,19 @@
     right: 0;
     top: 0;
 }
-.post-item .post-action img{
-    height: 16px;
+
+.post-item .post-action button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+.post-item .post-action button img{
+    width: 100%;
+    /* height: 16px; */
+    /* width: 100%;
+    height: 100%; */
 }
 
 .time{
@@ -192,6 +203,11 @@
     .connectivity-btn{
         display: flex;
         flex-direction: column;
+    }
+    .post-item .post-action button{
+     
+        width: 16px;
+        height: 16px;
     }
     
 }

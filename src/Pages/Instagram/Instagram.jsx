@@ -733,14 +733,14 @@ export default function Instagram() {
                                 {postWaitListData.map((data, index) => {
                                     return <div className='post-item'>
                                         {
-                                            data.img && <>
-                                                <img src={axios.defaults.baseURL.split('/a')[0]+data.img} alt="" />
+                                            true && <>
+                                                <img className='post-img' src={axios.defaults.baseURL.split('/a')[0]+data.img} alt="" />
                                                 <div className='post-action'>
-                                                    <button className='mx-2 p-1' onClick={(e) => { editClick(data) }}>
+                                                    <button className='m-1 p-1' onClick={(e) => { editClick(data) }}>
 
                                                         <img src={edit_icon} alt="" />
                                                     </button>
-                                                    <button className='p-1' onClick={(e) => { deleteWaitListApi(data.id) }}>
+                                                    <button className='m-1 p-1' onClick={(e) => { deleteWaitListApi(data.id) }}>
                                                         <img src={delete_icon} alt="" />
 
                                                     </button>
