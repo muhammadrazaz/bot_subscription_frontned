@@ -734,7 +734,7 @@ export default function Instagram() {
                                     return <div className='post-item'>
                                         {
                                             data.img && <>
-                                                <img className='post-img' src={axios.defaults.baseURL.split('/a')[0]+data.img} alt="" />
+                                                <img className='post-img w-100 h-100' src={axios.defaults.baseURL.split('/a')[0]+data.img} alt="" />
                                                 <div className='post-action'>
                                                     <button className='m-1 p-1' onClick={(e) => { editClick(data) }}>
 
