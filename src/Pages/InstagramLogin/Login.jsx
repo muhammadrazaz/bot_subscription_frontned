@@ -74,7 +74,7 @@ export default function Login() {
 
           <button className='my-4 text-center p-2 w-100' type='submit'>Login</button>
 
-          {/* <Link to={'/'} className='forgot-password'>or create account</Link><br /> */}
+          <Link to={'/register'} className='forgot-password align-self-start'>or create account</Link><br />
 
 
         </form>

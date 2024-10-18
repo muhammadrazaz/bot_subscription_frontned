@@ -20,6 +20,7 @@ import OpenTask from "../Pages/OpenTasks/OpenTask";
 import InstaLogin from '../Pages/InstagramLogin/Login'
 import ForgotPassword from '../Pages/ForgotPassword/ForgotPassword'
 import ResetPassword from "../Pages/ResetPassword/ResetPassword";
+import SignUp from '../Pages/InstgramSignUp/SignUp'
 
 const Routes = () => {
   const { token, userDetail } = useAuth();
@@ -297,6 +298,10 @@ const Routes = () => {
     {
       path: "/",
       element: <InstaLogin />
+    },
+    {
+      path: "/register",
+      element: <SignUp />
     },
 
     {
