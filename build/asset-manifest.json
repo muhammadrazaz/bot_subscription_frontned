@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.b6498824.css",
-    "main.js": "/static/js/main.8d0037ea.js",
+    "main.js": "/static/js/main.c62d36df.js",
     "static/js/453.05815b94.chunk.js": "/static/js/453.05815b94.chunk.js",
     "static/media/fa-solid-900.svg": "/static/media/fa-solid-900.7a8b4f130182d19a2d7c.svg",
     "static/media/fa-brands-400.svg": "/static/media/fa-brands-400.2f517e09eb2ca6650ff5.svg",
@@ -39,17 +39,18 @@
     "index.html": "/index.html",
     "static/media/pie-icon.svg": "/static/media/pie-icon.196e361c65c8ec8673369ca0bbd66ba5.svg",
     "static/media/production-history-icon.svg": "/static/media/production-history-icon.c505daaacc70a756851f8f656648466c.svg",
+    "static/media/inventory-icon.svg": "/static/media/inventory-icon.9e6478e7d6e080fd3ce588c34c0b9108.svg",
     "static/media/download-icon.svg": "/static/media/download-icon.aa4c671855719a7cf4b0efdf424e5454.svg",
     "static/media/Increase-icon.svg": "/static/media/Increase-icon.6f6fc9e9338c269814dbdead3c5d2055.svg",
     "static/media/decrease-icon.svg": "/static/media/decrease-icon.4cf47f71d6e0fe77e3ef8ede4bfedbd2.svg",
     "static/media/arrow_left.svg": "/static/media/arrow_left.db6e2d88c7c35a775ce4.svg",
     "static/media/arrow_right.svg": "/static/media/arrow_right.f7c6ac6d310d3b82f0a0.svg",
     "main.b6498824.css.map": "/static/css/main.b6498824.css.map",
-    "main.8d0037ea.js.map": "/static/js/main.8d0037ea.js.map",
+    "main.c62d36df.js.map": "/static/js/main.c62d36df.js.map",
     "453.05815b94.chunk.js.map": "/static/js/453.05815b94.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b6498824.css",
-    "static/js/main.8d0037ea.js"
+    "static/js/main.c62d36df.js"
   ]
 }

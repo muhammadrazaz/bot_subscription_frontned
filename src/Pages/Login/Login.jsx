@@ -71,14 +71,14 @@ export default function Login() {
         const leftPanel = document.querySelector(".left-panel");
         const rightPanel = document.querySelector(".right-panel");
         const signUpForm = document.querySelector(".sign-up-form")
-        
+
         container.classList.add("sign-up-mode");
         setTimeout(() => {
-            
+
             leftPanel.classList.add("d-none")
             rightPanel.classList.remove("d-none")
             signUpForm.classList.remove('d-none')
-            
+
         }, 1000);
 
 
@@ -90,17 +90,17 @@ export default function Login() {
         const leftPanel = document.querySelector(".left-panel");
         leftPanel.classList.remove("d-none")
         const rightPanel = document.querySelector(".right-panel");
-        
+
         const signUpForm = document.querySelector(".sign-up-form")
         // setTimeout(()=>{
 
-            const container = document.querySelector(".custom-container");
-            container.classList.remove("sign-up-mode");
+        const container = document.querySelector(".custom-container");
+        container.classList.remove("sign-up-mode");
 
-            signUpForm.classList.add("d-none")
-            setTimeout(()=>{
-                rightPanel.classList.add("d-none")
-            },[1000])
+        signUpForm.classList.add("d-none")
+        setTimeout(() => {
+            rightPanel.classList.add("d-none")
+        }, [1000])
         // },[10])
         setErrors({})
     }

@@ -13,6 +13,7 @@ import logoutIcon from '../../Assets/logout-icon.svg'
 import historyIcon from '../../Assets/production-history-icon.svg'
 import paymentIcon from '../../Assets/sale-stats-icon.svg'
 import logoPng from '../../Assets/logowhitepng.png'
+import developerIcon from '../../Assets/inventory-icon.svg'
 
 
 import { MDBTooltip } from 'mdb-react-ui-kit';
@@ -88,6 +89,13 @@ export default function Sidebar(props) {
                             <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Open Task" placement='right'>
                                 <NavLink to='/open-tasks' className={window.location.href.includes('/open-tasks') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
                                     <img src={historyIcon} alt="" />
+                                </NavLink>
+
+                            </MDBTooltip>
+
+                            <MDBTooltip tag='span' wrapperClass="d-flex align-items-center justify-content-center" title="Developers" placement='right'>
+                                <NavLink to='/developers' className={window.location.href.includes('/developers') ? 'nav-link active-1' : 'nav-link'} onClick={props.changeSidebarWidth}>
+                                    <img src={developerIcon} alt="" />
                                 </NavLink>
 
                             </MDBTooltip>
