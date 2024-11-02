@@ -82,7 +82,7 @@ export default function Instagram() {
     const url = axios.defaults.baseURL
 
 
-    const wsUrl = 'ws://' + url.split('//')[1].split('/')[0] + '/ws/ac/?token=' + token;
+    const wsUrl = 'wss://' + url.split('//')[1].split('/')[0] + '/ws/ac/?token=' + token;
 
 
 
