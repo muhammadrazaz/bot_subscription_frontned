@@ -16,7 +16,8 @@ export default axios.create({
     // const token = localStorage.getItem("token")
     // baseURL: 'http://127.0.0.1:8000/api',
     // baseURL: 'http://143.244.180.220:8001/api',
-    baseURL: 'http://167.172.151.37:8001/api',
+    // baseURL: 'http://167.172.151.37:8001/api',
+    baseURL:'https://backend.sogen.ai/',
     
     // headers: {
     //     'Authorization': `Bearer ${localStorage.getItem("token")}`,  // Include the token in the Authorization header
