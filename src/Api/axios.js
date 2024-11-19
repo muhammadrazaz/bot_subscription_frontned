@@ -15,8 +15,8 @@ const getHeaders = () => {
 export default axios.create({
     // const token = localStorage.getItem("token")
     // baseURL: 'http://127.0.0.1:8000/api',
-    baseURL: 'http://143.244.180.220:8001/api',
-    
+    // baseURL: 'http://143.244.180.220:8001/api',
+    baseURL: "http://143.110.228.134:8000/api",
     
     // headers: {
     //     'Authorization': `Bearer ${localStorage.getItem("token")}`,  // Include the token in the Authorization header
